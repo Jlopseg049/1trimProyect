@@ -24,5 +24,5 @@
             $this->duracion = $examen['duracion'];
             $this->nPreguntas = $examen['nPreguntas'];¡
             $this->activo = $examen['activo'];           
-        }
+        }   
     }

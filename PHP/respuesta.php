@@ -21,4 +21,9 @@
             $this->enunciadoRespuesta = $row['enunciadoRespuesta'];
             $this->idPregunta = $row['idPregunta'];           
         }
+        $respuestas = select ...;
+        $preguntaRespuestas=array();
+        foreach ($respuestas as $k => &$pregunta) {
+        $preguntaRespuestas[$pregunta['idpregunta']][$k] = $pregunta['idrespuesta'];
+    }
     }

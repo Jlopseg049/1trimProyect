@@ -86,8 +86,8 @@ body {
   opacity: 1;
 }
 .navMenu a:nth-child(6):hover ~ .dot {
-  -webkit-transform: translateX(455px);
-  transform: translateX(455px);
+  -webkit-transform: translateX(465px);
+  transform: translateX(465px);
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   opacity: 1;

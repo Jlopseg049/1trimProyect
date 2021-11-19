@@ -6,7 +6,8 @@
         protected $id;
         protected $enunciado;
         protected $recurso;
-        protected $tematica;
+        protected Respuesta $respuestaCorrecta;
+        protected Tematica $tematica;
 
 
         /*Metodos mágicos*/
@@ -22,6 +23,7 @@
             $this->id = $row['id'];
             $this->enunciado = $row['enunciado'];
             $this->recurso = $row['recurso'];
-            $this->tematica = $row['tematica'];¡
+            $this->tematica = $row['tematica'];
+            $this->respuestaCorrecta = $row['respuestaCorrecta'];
         }
     }

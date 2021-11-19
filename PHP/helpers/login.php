@@ -1,7 +1,5 @@
 <?php
-    require_once "../persona.php";
-    require_once "Sesion.php";
-    require_once "../../DB/db.php";
+    require_once "db.php";
     class Login
     {
         public static function Identifica(string $usuario,string $contrasena,bool $recuerdame)

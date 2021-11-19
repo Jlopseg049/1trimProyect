@@ -25,4 +25,8 @@
             $this->nPreguntas = $examen['nPreguntas'];¡
             $this->activo = $examen['activo'];           
         }   
+
+        public static sacaPreguntas(){
+           return DB::SacaRespuestasPorPregunta();
+        }
     }

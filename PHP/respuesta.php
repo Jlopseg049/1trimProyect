@@ -3,9 +3,9 @@
 
             /*Datos*/
 
-        protected $id;
+        protected $idRespuesta;
         protected $enunciadoRespuesta;
-        protected $idPregunta;
+        protected Pregunta $idPregunta;
 
             /*Metodos mágicos*/
 
@@ -17,13 +17,25 @@
         }
 
         public function __construct($row) {
-            $this->id = $row['id'];
+            $this->idRespuesta = $row['idRespuesta'];
             $this->enunciadoRespuesta = $row['enunciadoRespuesta'];
             $this->idPregunta = $row['idPregunta'];           
         }
-        $respuestas = select ...;
-        $preguntaRespuestas=array();
+
+
+            /*Métodos*/
+
+        public static function MuestraExamenPreguntas(){
+            $respuestas = array(DB::SacaPreungtas);
+            $RespuestasPorPregunta = array();
+            foreach ($respuestas as $respuesta => $preguntaResponder){
+                $RespuestasPorPregunta  [$preguntaResponder[$this->$idPregunta->__get('idRespuesta')]
+                                        [$respuesta] = $preguntaResponder[$this->$idRespuesta];
+            }
+            
+        }
+
         foreach ($respuestas as $k => &$pregunta) {
         $preguntaRespuestas[$pregunta['idpregunta']][$k] = $pregunta['idrespuesta'];
-    }
+        }
     }

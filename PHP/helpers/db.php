@@ -1,5 +1,5 @@
 <?php
-
+    require_once "persona.php";
     class DB{
 
         // Creamos e iniciamos la conexion

@@ -27,7 +27,7 @@ class User {
         $this->id = $row['id'];
         $this->nombre = $row['nombre'];
         $this->ap1 = $row['ap1'];
-        $this->ap2 = $row['ap2'];¡
+        $this->ap2 = $row['ap2'];
         $this->email = $row['email'];
         $this->password= $row['password'];
         $this->name = $row['name'];

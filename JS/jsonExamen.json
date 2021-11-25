@@ -1,0 +1,12 @@
+{
+   "codigoExamen":  null,
+   "enunciado":     null,
+   "numPreguntas":  null,
+   "duracion": null,
+   "bancoPreguntas":[{
+                        "id":"idrespuesta",
+                        "enunciado":"enunciadoRespuesta",
+                        "recurso":"http://imagen/image.jpg"
+                    }],
+    "preguntasIcluidas":[21,17,18,"..."]
+}

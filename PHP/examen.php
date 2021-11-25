@@ -18,11 +18,15 @@
             $this->$atributo = $valor;
         }
 
-        public function __construct($examen) {
-            $this->idExamenHecho = $examen['id'];
-            $this->idExamen = $examen['descripcion'];
-            $this->duracion = $examen['duracion'];
-            $this->nPreguntas = $examen['nPreguntas'];¡
-            $this->activo = $examen['activo'];           
+        public function __construct($row) {
+            $this->id = $row['id'];
+            $this->descripcion = $row['descripcion'];
+            $this->duracion = $row['duracion'];
+            $this->nPreguntas = $row['nPreguntas'];
+            $this->activo = $row['activo'];           
         }   
+
+        public static function sacaPreguntas(){
+           return DB::sacaPreguntas();
+        }
     }

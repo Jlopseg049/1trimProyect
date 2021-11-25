@@ -1,4 +1,6 @@
 <?php
+    require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/respuesta.php";
+
     class Pregunta{
 
         /*Datos*/
@@ -6,6 +8,7 @@
         protected $id;
         protected $enunciado;
         protected $recurso;
+        protected $respuestaCorrecta;
         protected $tematica;
 
 
@@ -22,6 +25,7 @@
             $this->id = $row['id'];
             $this->enunciado = $row['enunciado'];
             $this->recurso = $row['recurso'];
-            $this->tematica = $row['tematica'];¡
+            $this->tematica = $row['tematica'] = new Tematica;
+            $this->respuestaCorrecta = $row['respuestaCorrecta'] = new Respuesta;
         }
     }

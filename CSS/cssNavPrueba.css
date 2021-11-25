@@ -7,16 +7,23 @@
 }
 
 body {
-  background: #272727;
   font-family: "Montserrat", sans-serif;
 }
 
+header{
+
+  position: relative;
+  z-index: 100000;
+}
+
 .navMenu {
-  position: absolute;
-  top: 50%;
+
+  position: fixed;
+  top: 4%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+
 }
 
 .navMenu a {
@@ -86,8 +93,8 @@ body {
   opacity: 1;
 }
 .navMenu a:nth-child(6):hover ~ .dot {
-  -webkit-transform: translateX(455px);
-  transform: translateX(455px);
+  -webkit-transform: translateX(465px);
+  transform: translateX(465px);
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   opacity: 1;

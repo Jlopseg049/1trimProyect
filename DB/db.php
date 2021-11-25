@@ -1,5 +1,5 @@
 <?php
-
+    require_once "../PHP/persona.php";
     class DB{
 
         // Creamos e iniciamos la conexion
@@ -53,7 +53,9 @@
                     return false;
                 }
             }
+        }
 
+        public static function SacaRespuestasPorPregunta(){
 
         }
     }

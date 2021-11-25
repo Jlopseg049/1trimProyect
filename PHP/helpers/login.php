@@ -1,7 +1,5 @@
 <?php
-    require_once "../persona.php";
-    require_once "Sesion.php";
-    require_once "../../DB/db.php";
+    require_once "db.php";
     class Login
     {
         public static function Identifica(string $usuario,string $contrasena,bool $recuerdame)
@@ -21,8 +19,8 @@
     
         private static function ExisteUsuario(string $usuario,string $password=null)
         {
-            DB::conecta();
-           return DB::existeusuario($usuario,$password);
+            DB::conecta("proyecto");
+           return DB::existeDato("persona",$usuario,$password);
         }
     
         public static function UsuarioEstaLogueado()
@@ -38,5 +36,14 @@
                 return true;
             }
             return false;
+        }
+        public static function Registro (Usuario $usuario)
+        {
+            if(self::Existeusuario($usuario->__get("email"),$usuario->__get("password"))==true)
+            {
+
+                return "Usuario ya registrado";
+            }
+            return DB::nuevoUsuario($usuario);
         }
     }

@@ -1,7 +1,11 @@
 <?php
+<<<<<<< HEAD
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/persona.php";
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/helpers/session.php";
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/helpers/login.php";
+=======
+    require_once "persona.php";
+>>>>>>> db1869e6cdc39237d857d5959ce5fdb9aefb5f00
     class DB{
 
         // Creamos e iniciamos la conexion

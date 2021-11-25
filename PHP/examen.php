@@ -26,7 +26,12 @@
             $this->activo = $row['activo'];           
         }   
 
+<<<<<<< HEAD
         public static function sacaPreguntas(){
            return DB::sacaPreguntas();
+=======
+        public static sacaPreguntas(){
+           return DB::SacaRespuestasPorPregunta();
+>>>>>>> db1869e6cdc39237d857d5959ce5fdb9aefb5f00
         }
     }

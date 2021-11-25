@@ -5,5 +5,5 @@ window.addEventListener("load", function(){
     const selectedPreguntas = tablas.children[1];
 
     const ajax = new XMLHttpRequest;
-    
+        
 });

@@ -1,20 +1,28 @@
-<script src="../js/ajax.js"></script>
+<script src="../js/ajaxExamen.js"></script>
 <h2>Examenes/AltaExamenes</h2>
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>Enunciado</th>
+                <th>Tématica</th>
+            </tr>
+    </thead>
+    <tbody>
 
-<table>
-    <tbody>
-        <tr>
-            <th>Enunciado</th>
-            <th>Tématica</th>
-        </tr>
     </tbody>
-</table>
-<table>
-    <tbody>
-        <tr>
-            <th>ID</th>
-            <th>Enunciado</th>
-            <th>Temática</th>
-        </tr>
-    </tbody>
-</table>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Enunciado</th>
+                <th>Temática</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</section>
+    

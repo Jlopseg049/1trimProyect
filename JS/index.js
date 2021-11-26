@@ -11,7 +11,6 @@ window.addEventListener("load", function(){
         luna.style.left = -scrollY * 0.5 + "px";
         montanas.style.top = -scrollY * 0.15 + "px";
         carretera.style.top = scrollY * 0.15 + "px";
-        header.style.top = scrollY * 1.2 + "px";
     });
     
 });

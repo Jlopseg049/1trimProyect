@@ -62,4 +62,5 @@ body{
         color:var(--textColor);
         font-size: 8em;
         z-index: 5;
+        font-family: 'Jim Nightshade', cursive;
     }

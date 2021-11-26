@@ -7,10 +7,12 @@
         <title>Tienda</title>
         <?php
 
-            require_once "PHP/DB.php";
-            require_once "`PHP`/User.php";
-            include_once "PHP/Sesion.php";
-            include_once "PHP/Login.php";
+            require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/persona.php";
+            require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/session.php";
+            require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/login.php";
+            require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/validator.php";
+            require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/db.php";
+
 
 
         ?>
@@ -19,14 +21,16 @@
     <body>
 
         <form action="" method="post">
-            <label for="Nombre">Nombre</label><input type="text" name="Nombre" required>
+            <label for="Email">Email</label><input type="email" name="Email" required>
             <label for="Pass">Contraseña</label><input type="password" name="Pass" required>
             <?php
             if (isset($_POST["enviar"])) {
-                if (empty($_POST["Nombre"]) || empty($_POST["Pass"])) {
+                if (empty($_POST["Email"]) || empty($_POST["Pass"])) {
                     echo "No dejes campos en blanco";
+                }elseif($a){
+
                 }else{
-                    Login::identifica($_POST["Nombre"],$_POST["Pass"]);
+                    Login::identifica($_POST["Email"],$_POST["Pass"]);
                     header("Location: views/Pruebas.php");
 
                 }

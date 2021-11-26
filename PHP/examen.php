@@ -1,4 +1,6 @@
 <?php
+
+    require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/db.php";
     class Examen{
 
             /*Datos*/
@@ -26,12 +28,8 @@
             $this->activo = $row['activo'];           
         }   
 
-<<<<<<< HEAD
         public static function sacaPreguntas(){
+            DB::conexion("proyecto");
            return DB::sacaPreguntas();
-=======
-        public static sacaPreguntas(){
-           return DB::SacaRespuestasPorPregunta();
->>>>>>> db1869e6cdc39237d857d5959ce5fdb9aefb5f00
         }
     }

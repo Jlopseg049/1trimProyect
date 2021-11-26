@@ -1,18 +1,15 @@
 <?php
-<<<<<<< HEAD
+
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/persona.php";
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/helpers/session.php";
     require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/helpers/login.php";
-=======
-    require_once "persona.php";
->>>>>>> db1869e6cdc39237d857d5959ce5fdb9aefb5f00
     class DB{
 
         // Creamos e iniciamos la conexion
 
         protected static $con;
         
-        public static function conecta(String $nombreDB){
+        public static function conexion(String $nombreDB){
             //Preparamos las opciones de nuestra conexión para una mejor legibilidad
             $opciones =array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
             self::$con = new PDO("mysql:host=localhost;dbname=${nombreDB}", 'root', '', $opciones);
@@ -66,10 +63,9 @@
         }
 
         // Comprobamos que el usuario y contraseña se encuentran en nuestra BD
-        public static function existeDato(String $nombreTabla,String $usuario, String $contrasena){
+        public static function Existeusuario(String $usuario, String $contrasena){
             $sql = "SELECT email, contrasena from proyecto.persona 
                             where email like '${usuario}'";
-                            var_dump($sql);
             $resultado = self::$con->query($sql);
             if($resultado){ 
                 while($fila = $resultado->fetch() ){
@@ -96,7 +92,7 @@
 
         //Examen
         public static function sacaPreguntas($idPregunta=null){
-            if($sql!=null){
+            if($idPregunta!=null){
                 $sql ="Select * from proyecto.preguntas inner join proyecto.tematica on
                 proyecto.preguntas.tematica = proyecto.tematica.idtematica
                 where proyecto.preguntas.idpregunta =${idPregunta};";

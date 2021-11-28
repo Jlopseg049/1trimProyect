@@ -2,7 +2,7 @@
 class Validacion
 {
     //Array de errores
-    private $errores;
+    private static $errores;
 
     //Constructor
     public function __construct()
@@ -16,11 +16,11 @@ class Validacion
      * @param [type] $campo
      * @return boolean
      */ 
-    public function Requerido($campo)
+    public static function Requerido($campo)
     {
         if(!isset($_POST[$campo]) || empty($_POST[$campo]))
         {
-            $this->errores[$campo]="El campo $campo no puede estar vacio";
+            self::$errores[$campo]="El campo $campo no puede estar vacio";
             return false;
         }
         return true;
@@ -35,12 +35,12 @@ class Validacion
      * @param [int] $max
      * @return boolean
      */
-    public function EnteroRango($campo,$min=PHP_INT_MIN,$max=PHP_INT_MAX)
+    public static function EnteroRango($campo,$min=PHP_INT_MIN,$max=PHP_INT_MAX)
     {
         if(!filter_var($_POST[$campo],FILTER_VALIDATE_INT,
             ["options"=>["min_range"=>$min,"max_range"=>$max]]))
         {
-            $this->errores[$campo]="Debe ser entero entre $min y $max";
+            self::$errores[$campo]="Debe ser entero entre $min y $max";
             return false;
         }
         return true;
@@ -55,11 +55,11 @@ class Validacion
      * @param integer $min
      * @return boolean
      */
-    public function CadenaRango($campo,$max,$min=0)
+    public static function CadenaRango($campo,$max,$min=0)
     {
         if(!(strlen($_POST[$campo])>$min && strlen($_POST[$campo])<$max))
         {
-            $this->errores[$campo]="Debe tener entre $min y $max caracteres";
+            self::$errores[$campo]="Debe tener entre $min y $max caracteres";
             return false;
         }
         return true;
@@ -72,17 +72,18 @@ class Validacion
      * @param [String] $campo
      * @return boolean
      */
-    public function Email($campo)
+    public static function Email($campo)
     {
-        if(!filter_var($_POST[$campo],FILTER_VALIDATE_EMAIL))
+        if(filter_var($campo,FILTER_VALIDATE_EMAIL))
         {
-            $this->errores[$campo]="Debe ser un email válido";
+            return true;
+        }else{
+            self::$errores[$campo]="Debe ser un email válido";
             return false; 
         }
-        return true;
     }
 
-    public function Dni($campo)
+    public static function Dni($campo)
     {
         $letras="TRWAGMYFPDXBNJZSQVHLCKE";
         $mensaje="";
@@ -103,7 +104,7 @@ class Validacion
         {
             $mensaje="El campo $campo no es un Dni válido";
         }
-        $this->errores[$campo]=$mensaje;
+        self::$errores[$campo]=$mensaje;
         return FALSE;
     }
 
@@ -114,11 +115,11 @@ class Validacion
      * @param [string] $patron
      * @return boolean
      */
-    public function Patron($campo,$patron)
+    public static function Patron($campo,$patron)
     {
         if(!preg_match($patron,$_POST[$campo]))
         {
-            $this->errores[$campo]="No cumple el patrón $patron";
+            self::$errores[$campo]="No cumple el patrón $patron";
             return false;
         }
         return true;
@@ -132,11 +133,11 @@ class Validacion
      * @param [type] $mensaje
      * @return boolean
      */
-    public function ValidaConFuncion($campo,$funcion,$mensaje)
+    public static function ValidaConFuncion($campo,$funcion,$mensaje)
     {
         if(!call_user_func($funcion))
         {
-            $this->errores[$campo]=$mensaje;
+            self::$errores[$campo]=$mensaje;
             return false;
         }
         return true;
@@ -147,37 +148,37 @@ class Validacion
      *
      * @return void
      */
-    public function ValidacionPasada()
+    public static function ValidacionPasada()
     {
-        if(count($this->errores)!=0)
+        if(count(self::$errores)!=0)
         {
             return false;
         }
         return true;
     }
 
-    public function ImprimirError($campo)
+    public static function ImprimirError($campo)
     {
         return
-        isset($this->errores[$campo])?'<span class="error_mensaje">'.$this->errores[$campo].'</span>':'';
+        isset(self::$errores[$campo])?'<span class="error_mensaje">'.self::$errores[$campo].'</span>':'';
     }
 
-    public function getValor($campo)
+    public static function getValor($campo)
     {
         return
         isset($_POST[$campo])?$_POST[$campo]:'';
     }
 
-    public function getSelected($campo,$valor)
+    public static function getSelected($campo,$valor)
     {
         return
         isset($_POST[$campo]) && $_POST[$campo]==$valor?'selected':'';
     }
 
-    public function getChecked($campo,$valor)
+    public static function getChecked($campo,$valor)
     {
         return
         isset($_POST[$campo]) && $_POST[$campo]==$valor?'checked':'';
     }
-     
+
 }

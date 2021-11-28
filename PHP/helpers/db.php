@@ -64,12 +64,12 @@
 
         // Comprobamos que el usuario y contraseña se encuentran en nuestra BD
         public static function Existeusuario(String $usuario, String $contrasena){
-            $sql = "SELECT email, contrasena from proyecto.persona 
+            $sql = "SELECT email, contasena FROM proyecto.persona
                             where email like '${usuario}'";
             $resultado = self::$con->query($sql);
             if($resultado){ 
                 while($fila = $resultado->fetch() ){
-                    if($fila["email"] == $usuario && $fila["contrasena"] == $contrasena){
+                    if($fila["email"] == $usuario && $fila["contasena"] == $contrasena){
                         return true;
                     }else{
                         return false;

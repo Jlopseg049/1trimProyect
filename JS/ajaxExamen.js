@@ -26,27 +26,45 @@ window.addEventListener("load", function(){
 
 
         function crearContenido(mensaje){
+          const filaMovil = document.createElement("div");
+
           const fila = document.createElement("tr");
           fila.setAttribute("draggable", true);
+          fila.setAttribute("ondragstart",dragStart());
+          fila.setAttribute("ondrag",dragging());
+          filaMovil.setAttribute("ondrop", drop());
+          filaMovil.setAttribute("ondragover", "true");
           const enunciado = document.createElement("td");
-          enunciado.style.width ="400px"
+          enunciado.style.width ="45vw";
           enunciado.innerHTML = mensaje.enunciado;
           const tematica = document.createElement("td");
           tematica.innerHTML = mensaje.tematica;
+          filaMovil.appendChild(fila);
           fila.appendChild(enunciado);
           fila.appendChild(tematica);
   
-          if (mensaje.foto !=null) {
-              const div5 = document.createElement("div"); 
-              const foto = document.createElement("img");
-              imagen=new Image();
-              imagen.src='data:image/png;base64,'+mensaje.foto;
-              imagen.style.width="300px";
-              imagen.style.heigth="300px";
-              div5.className = "foto";
-              div5.appendChild(imagen);
-              div1.appendChild(div5);
-          }
-          return fila;
+          return filaMovil;
+      }
+
+      //Estilo tabla cargada
+
+      //Metodos tabla cargada
+      function dragStart(event) {
+        event.dataTransfer.setData("Text", event.target.id);
+      }
+      
+      function dragging(event) {
+        document.getElementById("demo").innerHTML = "The p element is being dragged";
+      }
+      
+      function allowDrop(event) {
+        event.preventDefault();
+      }
+      
+      function drop(event) {
+        event.preventDefault();
+        var data = event.dataTransfer.getData("Text");
+        event.target.appendChild(document.getElementById(data));
+        document.getElementById("demo").innerHTML = "The p element was dropped";
       }
 });

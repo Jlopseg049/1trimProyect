@@ -1,9 +1,10 @@
 <?php
-    require_once "db.php";
-    class Login
+          require_once "db.php";
+          require_once "session.php";
+          class Login
     {
-        public static function Identifica(string $usuario,string $contrasena,bool $recuerdame)
-        {
+        public static function Identifica(string $usuario,string $contrasena,bool $recuerdame = false)
+        { 
             if(self::Existeusuario($usuario,$contrasena))
             {
                 Sesion::iniciar();
@@ -19,8 +20,8 @@
     
         private static function ExisteUsuario(string $usuario,string $password=null)
         {
-            DB::conecta("proyecto");
-           return DB::existeDato("persona",$usuario,$password);
+            DB::conexion("proyecto");
+           return DB::Existeusuario($usuario,$password);
         }
     
         public static function UsuarioEstaLogueado()

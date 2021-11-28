@@ -8,16 +8,20 @@
         <link rel="stylesheet" href="../CSS/cssNavPrueba2.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     </head>
+    <header class="header">
     <?php
 //cabecera
+    session_start();
+    var_dump($_SESSION["login"]);
     require_once "header.php";
     ?>
-    <header class="content">
+    </header>
+    <main class="main">
     <?php
 //cuerpo
     require_once "Admin/Examen/nuevoExamen.PHP";
     ?>
-    </header>
+    </main>
     <?php
 //pie
     require_once "footer.php";

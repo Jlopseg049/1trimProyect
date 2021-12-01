@@ -1,6 +1,6 @@
 :root{
   --mainColor:#81807c;
-  --hoverColor:#757374; 
+  --hoverColor:#706a7c; 
 }
 
 form { margin-top: 0;padding: 1%;max-width:420px; margin:50px auto; border: var(--mainColor) 7px solid; border-radius: 15px; }

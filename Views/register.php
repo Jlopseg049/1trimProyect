@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tienda</title>
         <?php
-            require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/helpers/db.php" ;
-            require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/persona.php";
+           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
+           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
         ?>
         <link rel="stylesheet" href="CSS/css.css.css">
     </head>

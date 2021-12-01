@@ -14,7 +14,6 @@
         <?php
           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
-  var_dump(file_exists( "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php"));
         ?>
     </head>
     <body>
@@ -50,6 +49,7 @@
 
                         if ((Validacion::Requerido($_POST["user"]) == false || Validacion::Email($_POST["user"]) == false) &&
                              Validacion::Requerido($_POST["password"]) == false) {
+                               echo "entro";
                                 if (isset($_POST["recuerdame"])) {
                                   Login::identifica($_POST["user"],$_POST["password"],true);
                                 }else{
@@ -60,8 +60,13 @@
                                 }
                         }
                       }else{
-                        echo "<input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Correo electrónico\"  required>";
-                        echo "<input type=\"password\" name=\"password\" id=\"password\" placeholder=\"Contraseña\"  required>";
+                        if (isset($_COOKIE["recuerdame"])) {
+                          echo "<input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Correo electrónico\" value=".$_COOKIE["recuerdame"]." required>";
+                        }else{
+                          echo "<input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Correo electrónico\" required>";
+
+                        }
+                        echo "<input type=\"password\" name=\"password\" id=\"password\" placeholder=\"Contraseña\" required>";
                         echo "<label for=\"recuerdame\">Recuerdame</label>
                               <input type=\"checkbox\" name=\"recuerdame\" id\"recuerdame\" value=\"recuerdame\">";
                       }

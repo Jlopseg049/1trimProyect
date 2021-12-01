@@ -2,7 +2,6 @@
 class Sesion
 {
     public static function iniciar(){
-        echo "entro a iniciar session";
         if(!isset($_SESSION)){
             session_start();
         }

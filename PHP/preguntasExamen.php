@@ -1,6 +1,5 @@
 <?php
-    require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/examen.php";
-    require_once "{$_SERVER["DOCUMENT_ROOT"]}/Proyecto 1trimestre/PHP/pregunta.php";
+ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
 
     class preguntasExamem{
 

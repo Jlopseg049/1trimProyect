@@ -1,11 +1,13 @@
 <?php
+ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
+ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
     class Respuesta{
 
             /*Datos*/
 
         protected $idRespuesta;
         protected $enunciadoRespuesta;
-        protected Pregunta $idPregunta;
+        protected $idPregunta;
 
             /*Metodos mágicos*/
 
@@ -19,7 +21,7 @@
         public function __construct($row) {
             $this->idRespuesta = $row['idRespuesta'];
             $this->enunciadoRespuesta = $row['enunciadoRespuesta'];
-            $this->idPregunta = $row['idPregunta'];           
+            $this->idPregunta = $row['idPregunta'] = new Pregunta;           
         }
 
 
@@ -29,7 +31,7 @@
             $respuestas = array(DB::SacaPreungtas);
             $RespuestasPorPregunta = array();
             foreach ($respuestas as $respuesta => $preguntaResponder){
-                $RespuestasPorPregunta  [$preguntaResponder[$this->$idPregunta->__get('idRespuesta')]
+                $RespuestasPorPregunta  [$preguntaResponder[$this->$idPregunta->__get('idRespuesta')];
                                         [$respuesta] = $preguntaResponder[$this->$idRespuesta];
             }
             

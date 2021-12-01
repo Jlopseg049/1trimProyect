@@ -1,6 +1,6 @@
 <?php
-          require_once "db.php";
-          require_once "session.php";
+ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
+ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
           class Login
     {
         public static function Identifica(string $usuario,string $contrasena,bool $recuerdame = false)

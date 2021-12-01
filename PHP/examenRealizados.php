@@ -23,7 +23,7 @@
             $this->idExamenHecho = $row['idExamenHecho'];
             $this->idExamen = $row['idExamen'];
             $this->idPersona = $row['idPersona'];
-            $this->fecha = $row['fecha'];¡
+            $this->fecha = $row['fecha'];
             $this->calificacion = $row['calificacion'];
             $this->ejecucion= $row['ejecucion'];            
         }

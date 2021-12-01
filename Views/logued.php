@@ -3,27 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>AutoEscuela JLS</title>
         <link rel="stylesheet" href="../CSS/cssNavPrueba2.css">
+        <link rel="stylesheet" href="../CSS/tablaCss.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-    </head>
-    <header class="header">
     <?php
+        require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
+        require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
+    ?>
+    </head>
+    <body>
+    <?php
+    Sesion::iniciar();
+    if (!isset($_SESSION["login"])) {
+        header("location:..");
+    }
+    $pagina = isset($_GET["p"]) ? strtolower($_GET["p"]) : "Listados/lista";
+    isset($_GET["t"])?Sesion::escribir("tabla", $_GET["t"]):Sesion::escribir("tabla", "persona");
 //cabecera
-    session_start();
-    var_dump($_SESSION["login"]);
     require_once "header.php";
     ?>
-    </header>
-    <main class="main">
+    <main class="content">
     <?php
 //cuerpo
-    require_once "Admin/Examen/nuevoExamen.PHP";
+    require_once $pagina . ".php";
     ?>
     </main>
     <?php
 //pie
     require_once "footer.php";
     ?>
+    </body>
 </html>

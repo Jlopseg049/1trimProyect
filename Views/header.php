@@ -34,7 +34,6 @@ DB::conexion("proyecto");
 						<i class="icon fa fa-archive" aria-hidden="true"></i>
 					</span>Tematicas
 				</a>
-
 				<ul class="ul">
 					<li class="li">
 						<a href="?p=Admin/Tematicas/NuevaTematica" class="links">

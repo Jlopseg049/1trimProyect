@@ -26,98 +26,55 @@ window.addEventListener("load", function(){
 
 
 
+
         function crearContenido(mensaje){
-          //const filaMovil = document.createElement("div");
 
           const fila = document.createElement("tr");
           fila.style.cursor="pointer";
           fila.setAttribute("draggable", true);
-          //fila.setAttribute("ondragstart",dragStart());
-          //fila.setAttribute("ondrag",dragging());
-          //filaMovil.setAttribute("ondrop", drop());
-          //filaMovil.setAttribute("ondragover", "true");
+
+          const id = document.createElement("td");
+          id.innerHTML =mensaje.id;
+          id.style.display="none";
+
           const enunciado = document.createElement("td");
           enunciado.style.cursor="pointer";
-          enunciado.style.paddingLeft="3vh"
+          enunciado.style.paddingLeft="3vh";
           enunciado.style.textAlign="justify";
-          enunciado.style.width ="30vw";
+          enunciado.style.width ="20vw";
+          enunciado.style.textAlign="center";  
           enunciado.innerHTML = mensaje.enunciado;
+
           const tematica = document.createElement("td");
           tematica.innerHTML = mensaje.tematica;
-          tematica.style.textAlign="center";  
-          //filaMovil.appendChild(fila);
+          tematica.style.textAlign="center"; 
+           
+          fila.appendChild(id);
           fila.appendChild(enunciado);
           fila.appendChild(tematica);
-  
+
+          fila.id=mensaje.id;
+          fila.addEventListener("dragstart", function(){
+            event.dataTransfer.setData('id', event.target.id);
+            console.log(event.dataTransfer.getData('id'));
+          });
           return fila;
       }
 
       //Estilo tabla cargada
-      for( i = 0; i < preguntas.length; i++){
-        preguntas[i].addEventListener("dragstart", function(){
-          console.log("comienza drag");
+      for (let i = 0; i < tablas.length; i++) {
+        tablas[i].addEventListener("dragover", function(){
+          event.preventDefault();
         });
-      }
-      selectedPreguntas.addEventListener("dragenter", function(){
-        console.log("drag entra");
-      });
-   /*   for( i = 0; i < preguntas.length; i++){
-        preguntas[i].ondragstart=function(ev){
-          ev.preventDefault();
-          ev.dataTransfer.setData("text", ev.target.id);
-        }
-
-        preguntas[i].ondragover=function(ev){
-          ev.preventDefault();
-        }
-
-        preguntas[i].ondrop=function(ev){
-          ev.preventDefault();
-          const id=ev.dataTransfer.getData("text");
-          ev.target.parentNode.appendChild(document.getElementById(id));
-        }
-      }
-
-      listaPreguntas.ondragover=function(ev){
-        debugger;
-        ev.preventDefault();
-      }
-
-      listaPreguntas.ondrop = function(ev){
-        ev.preventDefault();
-        const id = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(id));
-      }
-
-      selectedPreguntas.ondragover=function(ev){
-        ev.preventDefault();
-      }
-
-      selectedPreguntas.ondrop = function(ev){
-        debugger
-        ev.preventDefault();
-        const id = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(id));
-      }
-*/
-
-   /*   //Metodos tabla cargada
-      function dragStart(event) {
-        event.dataTransfer.setData("Text", event.target.id);
-      }
-      
-      function dragging(event) {
-        document.getElementById("demo").innerHTML = "The p element is being dragged";
-      }
-      
-      function allowDrop(event) {
-        event.preventDefault();
-      }
-      
-      function drop(event) {
-        event.preventDefault();
-        var data = event.dataTransfer.getData("Text");
-        event.target.appendChild(document.getElementById(data));
-        document.getElementById("demo").innerHTML = "The p element was dropped";
-      }*/
+    }
+    tablas[0].addEventListener("drop", function(){
+      const id = event.dataTransfer.getData('id');
+      document.getElementById(id).children[0].style.display="none";
+      tablas[0].appendChild(document.getElementById(id));
+  });
+    tablas[1].addEventListener("drop", function(){
+      const id = event.dataTransfer.getData('id');
+      document.getElementById(id).children[0].style.removeProperty('display');
+      tablas[1].appendChild(document.getElementById(id));
+  });
 });

@@ -1,4 +1,4 @@
-<h2>Examenes/AltaExamenes</h2>
+<h2>Nuevo Examen</h2>
 
 <table>
     <tbody>

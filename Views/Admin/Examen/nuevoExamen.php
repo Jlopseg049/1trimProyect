@@ -1,7 +1,7 @@
 <script src="../js/Examen.js"></script>
 
 
-<h2>Examenes/AltaExamenes</h2>
+<h2>Nuevo Examen</h2>
 <section>
     <table>
         <thead>

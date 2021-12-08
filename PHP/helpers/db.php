@@ -14,12 +14,67 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
             self::$con = new PDO("mysql:host=localhost;dbname=${nombreDB}", 'root', '', $opciones);
         }
 
+        //Sacar una fila concreta de una tabla concreta
+    
+        public static function sacaFila($nombreTabla = null, $idFila = null){
+            if($nombreTabla != null || $idFila != null){
+                DB::conexion("proyecto");
+                //Antes de hacer la consulta, debemos sacar su clave principal ya que no todas son iguales
+                $sql = "SELECT 
+                            column_name as PRIMARYKEYCOLUMN
+                            FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC 
+                            
+                            INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KU
+                                ON TC.CONSTRAINT_TYPE = 'PRIMARY KEY' 
+                                AND TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME 
+                                AND KU.table_name=\"${nombreTabla}\"
+                            where tc.table_schema = \"proyecto\" and tc.TABLE_NAME=\"${nombreTabla}\";";
+
+                $peticion = self::$con->prepare($sql);
+                $peticion -> execute();
+                $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
+                    //Una vez tenemos el id, vamos a hacer la consulta
+                    if($nombreTabla == "persona"){
+                        $sql = "select nombre as 'Nombre*', 
+                                       ap1 as 'Apellido 1*', 
+                                       ap2 as 'Apellido 2', 
+                                       fechaNac as 'Fecha de nacimiento',
+                                       rol as 'Rol'
+                                 from proyecto.${nombreTabla} where `{$resultado["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
+                    }
+                    $sql = "select * from proyecto.${nombreTabla} where `{$resultado["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
+                    $peticion = self::$con->prepare($sql);
+                    $peticion->execute();
+                    $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
+                return $resultado;
+            }else{
+                return "No dejes campos en blanco";
+            }
+
+        }
+
+        //Sacar el esquema de cualquier tabla
+
+        public static function esquemaTabla($nombreTabla = null){
+            if($nombreTabla != null){
+                DB::conexion("proyecto");
+                $sql ="Desc ${nombreTabla}";
+
+                $peticion = self::$con->prepare($sql);
+                $peticion -> execute();
+                $esquema = $peticion->fetchAll(PDO::FETCH_NUM);
+
+                return $esquema;
+            }else{
+                return "Indique el nombre de alguna tabla";
+            }
+        }
 
         //Sacar una lista para cualquier tabla
 
         public static function sacaLista(String $nombreTabla){
             if($nombreTabla == "persona"){
-                $sql = "Select concat(nombre,' ',ap1,' ',ap2) as 'Nombre' ,
+                $sql = "Select idPersona, concat(nombre,' ',ap1,' ',ap2) as 'Nombre' ,
                                 email as 'Correo electrónico', 
                                 (Select nombreRol from proyecto.rol 
                                         where proyecto.rol.idRol = 
@@ -50,7 +105,13 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
                 $object->cabecera[] = $celdaCabecera['name'];
             }
             $object->tabla=$nombreTabla;
-
+            if ($nombreTabla == "persona") {
+                $sql="select id from proyecto.${nombreTabla}";
+            }
+                $sql="desc proyecto.${nombreTabla}";
+                $peticion = self::$con->prepare($sql);
+                $peticion -> execute();
+            $object->esquemaTabla=$peticion->fetchAll(PDO::FETCH_NUM);
             return json_encode($object);
         }
         
@@ -117,15 +178,6 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
                 return false;
         }
 
-        //Con la intencion de sacar con mayor facilidad el id de un nuevo usuario, hare una consulta.
-        //Este me sacara el id del proximo usuario
-        public static function idNuevoUsuario(){
-            $sql = "SELECT email, contrasena from proyecto.persona 
-            where email like '${usuario}'";
-            $resultado = self::$con->query($sql);
-                while($fila = $resultado->fetch() ){
-                }
-        }
 
         //Examen
         public static function sacaPreguntas($idPregunta=null){

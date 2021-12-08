@@ -4,7 +4,6 @@ window.addEventListener("load", function(){
     const cabecera = tablas[0].tHead;
     const lista = tablas[0].tBodies[0];
 
-
     sacaLista();
 
     function sacaLista(){
@@ -21,6 +20,7 @@ window.addEventListener("load", function(){
                 var fila = creaLista(respuesta.resultado[i], "lista", respuesta.tabla);
                 lista.appendChild(fila);
               }
+              lista.parentNode.appendChild(creatFoot(respuesta.tabla, respuesta.cabecera.length));
             }
           }}
           ajax.open("POST", "listados/methods/sacaLista.php");
@@ -32,37 +32,77 @@ window.addEventListener("load", function(){
     
     function creaLista(datos, tipo = "lista", tabla = "") {
       const fila = document.createElement("tr");
+      if(tipo == "lista"){fila.setAttribute("id", tabla + "_" + datos[0]);}
       const celdas = [];
-      for (let i = 0; i <datos.length; i++) {
-        if (tipo == "cabecera") {
-          celdas[ "celda" + i ] = document.createElement("th");
+        for (let i = 1; i <datos.length; i++) {
+          if (tipo == "cabecera") {
+            celdas[ "celda" + i ] = document.createElement("th");
 
-        }else if(tipo == "lista"){
-          celdas[ "celda" + i ] = document.createElement("td");
+          }else if(tipo == "lista"){
+            celdas[ "celda" + i ] = document.createElement("td");
 
-        } 
-           celdas[ "celda" + i ].innerText = datos[i];
-          fila.appendChild(celdas[ "celda" + i ]);
-      }
+          } 
+            celdas[ "celda" + i ].innerText = datos[i];
+            fila.appendChild(celdas[ "celda" + i ]);
+        }
       if (tipo == "cabecera") {
         celdas[" celda" + datos.length + 1] = document.createElement("th")
         celdas[" celda" + datos.length + 1].innerText = "Opciones"
       }else if(tipo == "lista"){
-        celdas[" celda" + datos.length + 1] = document.createElement("td")
+        celdas[" celda" + datos.length + 1] = document.createElement("td");
+        celdas[" celda" + datos.length + 1].style.display ="grid";
+        if (tabla != "tematica") {
+          celdas[" celda" + datos.length + 1].style.setProperty('grid-template-columns','repeat(3, 1fr)');
+        }else{
+          celdas[" celda" + datos.length + 1].style.setProperty('grid-template-columns','repeat(2, 1fr)');
+
+        }
+
         enlaces = [];
         enlaces["enlace 1"] = document.createElement("a");
         enlaces["enlace 1"].innerText="Editar";
+        enlaces["enlace 1"].setAttribute('href','?p=formulario/form&e=edit&id='+datos[0]);
+/*
+        activar = false;
+        for (let i = 0; i <datos.length; i++) {
+          if (datos[i].innerText == "Activo") {
+            activar = true; 
+                      enlaces["enlace 2"].innerText="activar";
 
+          }
+        }
+
+        */
+       if (tabla != "tematica") {
         enlaces["enlace 2"] = document.createElement("a");
         enlaces["enlace 2"].innerText="Desactivar";
-
+       }
+     
         enlaces["enlace 3"] = document.createElement("a");
         enlaces["enlace 3"].innerText="Borrar";
-        celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 1"]);
-        celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 2"]);
-        celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 3"]);
+
+                          celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 1"]);
+if (tabla != "tematica") {celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 2"]);}
+                          celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 3"]);
 
       }
       fila.appendChild(celdas[" celda" + datos.length + 1]);
       return fila;
+    }
+
+    function creatFoot(tabla, tamaño){
+      helloPie = document.createElement("tfoot");
+        helloFilaPie = document.createElement("tr");
+          helloCeldaPie = document.createElement("td");
+
+          helloPie.appendChild(helloFilaPie);
+        helloFilaPie.appendChild(helloCeldaPie);
+          helloCeldaPie.innerText = "Inserta " + tabla;
+          helloCeldaPie.colSpan= tamaño +1;
+          
+          helloCeldaPie.onclick = function(){
+            window.location="?p=formulario/form&e=anadir";
+          }
+
+      return helloPie;
     }

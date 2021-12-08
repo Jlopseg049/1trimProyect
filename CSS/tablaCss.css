@@ -1,18 +1,19 @@
 
-
-table{
+.tabla, table{
     margin-left: 10%;
 	background-color: white;
 	text-align: center;
 	border-collapse: collapse;
 	width: 80%;
 }
-
+.tabla{
+	background-color: transparent;
+}
 th, td{
 	padding: 10px;
 }
 
-thead{
+thead, tfoot{
 	background-color: #174459;
 	border-bottom: solid 5px #0f1036;
 	color: white;
@@ -27,3 +28,22 @@ tr:nth-child(even){
 	color: white;
 }
 */
+section.cuerpoTablaDisponible>div, header.cabeceraTabla>div#PregDisponibles{
+	margin-top: 8px;
+	width: 40vw;
+	height: 30px;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
+  }
+
+  section.cuerpoTablaSeleccionada>div, header.cabeceraTabla>div#PregSeleccionadas{
+	margin-top: 8px;
+	width: 40vw;
+	height: 30px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
+  }

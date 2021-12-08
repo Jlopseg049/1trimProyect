@@ -1,0 +1,199 @@
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+h1 {
+  margin: 0 auto 40px;
+  color: #fff;
+  font: 20px Helvetica;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+form label {
+  position: relative;
+  display: block;
+}
+
+form label input {
+  font: 18px Helvetica, Arial, sans-serif;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: block;
+  border: none;
+  padding: 20px;
+  width: 300px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  outline: none;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+form label input::-webkit-input-placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica, Arial, sans-serif;
+}
+
+form label input:-ms-input-placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica, Arial, sans-serif;
+}
+
+form label input::-ms-input-placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica, Arial, sans-serif;
+}
+
+form label input::placeholder {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  color: #999;
+  font: 18px Helvetica, Arial, sans-serif;
+}
+
+form label input:focus, form label input.populated {
+  padding-top: 28px;
+  padding-bottom: 12px;
+}
+
+form label input:focus::-webkit-input-placeholder, form label input.populated::-webkit-input-placeholder {
+  color: transparent;
+}
+
+form label input:focus:-ms-input-placeholder, form label input.populated:-ms-input-placeholder {
+  color: transparent;
+}
+
+form label input:focus::-ms-input-placeholder, form label input.populated::-ms-input-placeholder {
+  color: transparent;
+}
+
+form label input:focus::placeholder, form label input.populated::placeholder {
+  color: transparent;
+}
+
+form label input:focus + span, form label input.populated + span {
+  opacity: 1;
+  top: 10px;
+}
+
+form label span {
+  color: #35dc9b;
+  font: 13px Helvetica, Arial, sans-serif;
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  opacity: 0;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+form input[type="submit"] {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  font: 18px Helvetica, Arial, sans-serif;
+  border: none;
+  background: #1aaf75;
+  color: #fff;
+  padding: 16px 40px;
+}
+
+form input[type="submit"]:hover {
+  background: #109f67;
+}
+/*# sourceMappingURL=form.css.map */
+
+#label-input-file
+{
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+}
+
+.label-input-file
+{
+  font: 1em arial;
+  display: inline-block;
+  color: white;
+  padding: 0.4em 1em 0.3em;
+  text-transform: uppercase;
+  box-shadow:
+          0 0.2em 0 rgb(200,130,240),
+          0 0.3em 0.5em rgba(0,0,0,.3);
+  background: rgb(220,150,240);
+  transform: translateY(-0.2em);
+}
+
+.label-input-file:hover
+{
+  box-shadow:
+          0 0.35em 0 rgb(190,120,230),
+          0 0.4em 0.5em rgba(0,0,0,.3);
+  background: rgb(230,160,250);
+  transform: translateY(-0.35em);
+}
+
+.label-input-file:active
+{
+  box-shadow:
+          0 0em 0 rgb(190,120,230),
+          0 0em 0em rgba(0,0,0,.3);
+  background: rgb(190,120,230);
+  transform: translateY(0em);
+}
+
+#input-file
+{
+  opacity: 0
+}
+
+.input-file
+{
+  font: 1.1rem "verdana", sans-serif;
+  color: #444;
+  position: relative;
+  border: none;
+  display: inline-block;
+}
+
+label.input-file::after
+{
+  content: 'seleccionar archivito';
+  display: inline-block;
+  background: rgb(120,150,240);
+  color: white;
+  padding: 0.3em 1em;
+  margin-left: 0.2em;
+  box-shadow:
+          0 0.2em 0 rgb(100,130,240),
+          0 0.3em 0.5em rgba(0,0,0,.3);
+  vertical-align: middle;
+  position: absolute;
+  min-width: 17em;
+  text-align: center;
+  top: -10%;
+  left: 100%;
+  transform: translateY(-0.2em);
+}

@@ -28,9 +28,9 @@
                       <form method="post" class="flex-column-centered">
                        <?php
                        if (isset($_POST["login"])) {
-                        if (Validacion::Requerido($_POST["user"]) == false) {
+                        if (Validacion::Requerido("user") == false) {
                           echo "<input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Correo electrónico\" required>";
-                          Validacion::imprimirError($_POST["user"]);
+                             Validacion::imprimirError($_POST["user"]);
 
                         }elseif(Validacion::Email($_POST["user"]) == false){
                           echo "<input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Correo electrónico\" required>";
@@ -40,24 +40,32 @@
                           echo "<input type=\"text\" name=\"user\" id=\"user\" placeholder=\"Correo electrónico\" value=\"{$_POST["user"]}\" required>";
                         }
 
-                        if (Validacion::Requerido($_POST["password"]) == false) {
+                        if (Validacion::Requerido("password") == false) {
                           echo "<input type=\"password\" name=\"password\" id=\"password\" placeholder=\"Contraseña\" required>";
-                          Validacion::imprimirError($_POST["password"]);
+                          echo Validacion::imprimirError($_POST["password"]);
                         }else{
                           echo "<input type=\"password\" name=\"password\" id=\"password\" placeholder=\"Contraseña\" value=\"{$_POST["password"]}\" required>";
                         }
+                        echo "<label for=\"recuerdame\">Recuerdame</label>
+                        <input type=\"checkbox\" name=\"recuerdame\" id\"recuerdame\" value=\"recuerdame\">";
 
-                        if ((Validacion::Requerido($_POST["user"]) == false || Validacion::Email($_POST["user"]) == false) &&
-                             Validacion::Requerido($_POST["password"]) == false) {
-                               echo "entro";
-                                if (isset($_POST["recuerdame"])) {
-                                  Login::identifica($_POST["user"],$_POST["password"],true);
-                                }else{
-                                  Login::identifica($_POST["user"],$_POST["password"]);
-                                }
-                                if (Login::identifica($_POST["user"],$_POST["password"]) ==true) {
-                                      header("Location: views/logued.php");                        
-                                }
+                        if (Validacion::Requerido("user") == true && Validacion::Email($_POST["user"]) == true &&
+                             Validacion::Requerido("password") == true) {
+                               if ( Login::identifica($_POST["user"],$_POST["password"]) == false) {
+                                  echo "<h2 style='color:white;
+                                            font-family: Jim Nightshade, cursive;
+                                            
+                                  '> Campos incorrectos, vuelva a intentarlo.</h2>";
+                               }else{
+                                  if (isset($_POST["recuerdame"])) {
+                                    Login::identifica($_POST["user"],$_POST["password"],true);
+                                  }else{
+                                    Login::identifica($_POST["user"],$_POST["password"]);
+                                  }
+                                  if (Login::identifica($_POST["user"],$_POST["password"]) ==true) {
+                                        header("Location: views/logued.php");                        
+                                  }
+                               }
                         }
                       }else{
                         if (isset($_COOKIE["recuerdame"])) {
@@ -79,11 +87,16 @@
                       </a>
                   </div>
             </section>
-            input
             </main>
     <footer class="fixed_footer">
         <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis ducimus nemo quo totam neque quis soluta nisi obcaecati aliquam saepe dicta adipisci blanditiis quaerat earum laboriosam accusamus nesciunt! Saepe ex maxime enim asperiores nisi. Obcaecati nostrum nobis laudantium aliquam commodi veniam magni similique ullam quis pariatur voluptatem harum id error.</p>
+          <p>Bienvenido, mi nombre es Jesús López Segura, soy un estudiante de 2º de Desarrollo de aplicaciones web.
+            Esta viendo, el proyecto dedicado a la evaluación del primer trimestre.
+
+            Este consistira en el manejo de un software web dedicado al manejo y experimentación con examenes de autoescuela.
+            En el podrás iniciar sesion con los datos que tus profesores te proporcionen y podras prácticar todo lo que necesites.
+            Buena suerte y un saludo.
+          </p>
         </div>
       </footer>
     </body>

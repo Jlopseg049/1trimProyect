@@ -18,6 +18,7 @@ class Validacion
      */ 
     public static function Requerido($campo)
     {
+        
         if(!isset($_POST[$campo]) || empty($_POST[$campo]))
         {
             self::$errores[$campo]="El campo $campo no puede estar vacio";

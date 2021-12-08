@@ -17,6 +17,8 @@ form {
           justify-content: center;
 }
 
+
+
 h1 {
   margin: 0 auto 40px;
   color: #fff;
@@ -30,7 +32,7 @@ form label {
   display: block;
 }
 
-form label input {
+form label input, select {
   font: 18px Helvetica, Arial, sans-serif;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -124,7 +126,7 @@ form input[type="submit"]:hover {
   background: #109f67;
 }
 /*# sourceMappingURL=form.css.map */
-
+/*Cambios*/
 #label-input-file
 {
   opacity: 0;
@@ -197,3 +199,16 @@ label.input-file::after
   left: 100%;
   transform: translateY(-0.2em);
 }
+
+
+ form{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  }
+form>div{
+  align-self: center;
+  justify-self: center;
+}
+
+ 

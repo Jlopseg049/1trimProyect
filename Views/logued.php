@@ -26,6 +26,7 @@
     }
     //de inicio sera perfil
     $pagina = isset($_GET["p"]) ? strtolower($_GET["p"]) : "Listados/lista";
+
     isset($_GET["t"])?Sesion::escribir("tabla", $_GET["t"]):"";
 
     isset($_GET["e"])?Sesion::escribir("estado",$_GET["e"]):"";

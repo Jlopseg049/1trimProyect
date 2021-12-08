@@ -212,4 +212,13 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
         //Rol
         public static function insertaRol(){}
 
+        public static function miraRol(String $correo){
+            $sql ="select rol from proyecto.persona where email = '${correo}'";
+            $peticion = self::$con->prepare($sql);
+            $peticion->execute();
+            $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
+        return implode(",",$resultado);
+
+        }
+
 }

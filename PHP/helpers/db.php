@@ -1,4 +1,5 @@
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
 
 require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
 require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
@@ -32,20 +33,32 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
 
                 $peticion = self::$con->prepare($sql);
                 $peticion -> execute();
-                $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
+                $PK = $peticion->fetch(PDO::FETCH_ASSOC);
                     //Una vez tenemos el id, vamos a hacer la consulta
                     if($nombreTabla == "persona"){
-                        $sql = "select nombre as 'Nombre*', 
-                                       ap1 as 'Apellido 1*', 
-                                       ap2 as 'Apellido 2', 
-                                       fechaNac as 'Fecha de nacimiento',
-                                       rol as 'Rol'
-                                 from proyecto.${nombreTabla} where `{$resultado["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
+                        $sql = "select nombre , 
+                                       ap1 , 
+                                       ap2 , 
+                                       fechaNac,
+                                       rol
+                                 from proyecto.${nombreTabla} where `{$PK["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
+                                 
+                    }else if($nombreTabla == "preguntas"){
+                        $sql = "select * from proyecto.${nombreTabla} where `{$PK["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
+                            $peticion = self::$con->prepare($sql);
+                            $peticion->execute();
+                            $resultado[] = $peticion->fetchAll(PDO::FETCH_ASSOC);
+                        $sql = "select idrespuestas, respuesta from proyecto.respuestas where PreguntaRespuesta = " .  $idFila;
+                            $peticion = self::$con->prepare($sql);
+                            $peticion->execute();
+                            $resultado[] = $peticion->fetchAll(PDO::FETCH_ASSOC);
+                    return $resultado;
+                    }else{
+                        $sql = "select * from proyecto.${nombreTabla} where `{$PK["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
                     }
-                    $sql = "select * from proyecto.${nombreTabla} where `{$resultado["PRIMARYKEYCOLUMN"]}` = " .  $idFila;
                     $peticion = self::$con->prepare($sql);
                     $peticion->execute();
-                    $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
+                    $resultado[] = $peticion->fetchAll(PDO::FETCH_ASSOC);
                 return $resultado;
             }else{
                 return "No dejes campos en blanco";
@@ -58,14 +71,26 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
         public static function esquemaTabla($nombreTabla = null){
             if($nombreTabla != null){
                 DB::conexion("proyecto");
-                $sql ="Desc ${nombreTabla}";
 
-                $peticion = self::$con->prepare($sql);
-                $peticion -> execute();
-                $esquema = $peticion->fetchAll(PDO::FETCH_NUM);
+                if ($nombreTabla == 'preguntas') {
+                    $sql ="SELECT COLUMN_NAME AS `Campo`, COLUMN_TYPE AS `Tipo`, IS_NULLABLE AS `NULL`, 
+                                COLUMN_KEY AS `PK`, COLUMN_DEFAULT AS `Default`, EXTRA AS `Extra`
+                                    FROM information_schema.COLUMNS  
+                                     WHERE TABLE_SCHEMA = 'proyecto' AND TABLE_NAME = 'preguntas' || 
+                                            TABLE_NAME = 'respuestas';";
+                    $peticion = self::$con->prepare($sql);
+                    $peticion -> execute();
+                    $esquema = $peticion->fetchAll(PDO::FETCH_NUM);
+                }else{
+                    $sql ="Desc ${nombreTabla}";
+                    $peticion = self::$con->prepare($sql);
+                    $peticion -> execute();
+                    $esquema = $peticion->fetchAll(PDO::FETCH_NUM);
+                }
 
                 return $esquema;
             }else{
+                
                 return "Indique el nombre de alguna tabla";
             }
         }
@@ -73,6 +98,7 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
         //Sacar una lista para cualquier tabla
 
         public static function sacaLista(String $nombreTabla){
+            DB::conexion("proyecto");
             if($nombreTabla == "persona"){
                 $sql = "Select idPersona, concat(nombre,' ',ap1,' ',ap2) as 'Nombre' ,
                                 email as 'Correo electrónico', 
@@ -92,9 +118,18 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
                                         
                                 fechaNac as 'Fecha nacimiento' 
                             from proyecto.${nombreTabla}";
+            }else 
+            if(DB::miraRol($_SESSION["login"]) == 1 && $nombreTabla == "examen"){
+                $sql="select idExamen, descripcion, nPreguntas, duracion from proyecto.${nombreTabla}";
+            }else
+            if(DB::miraRol($_SESSION["login"]) == 1 && $nombreTabla == "examenHecho"){
+                $sql="SELECT e.fecha, e.calificacion FROM proyecto.examenHecho e inner join proyecto.persona p on
+                e.idPersona = p.idPersona;";
             }else{
+                
                 $sql = "Select * from proyecto.${nombreTabla}";
             }
+            
             $peticion = self::$con->prepare($sql);
             $peticion -> execute();
             $object = new stdClass();
@@ -115,6 +150,115 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
             return json_encode($object);
         }
         
+//insert generico
+public static function insertGenerico(String $file=null, String $ruta = null){
+    DB::conexion("proyecto");
+    //Separaremos los campos y sus valores y los usaremos como campos para los inserts
+    $campo = [];
+    $valor = [];
+    foreach( $_POST as $name => $value){
+        $campo[]= $name; $valor[]= $value;
+    }
+    $sql = "insert into proyecto." . $valor[0] . " (";
+    if ($file!=null && $ruta != null) {
+        $sql .= $file . ",";
+    }
+        for ($i=1; $i < count($campo); $i++) { 
+            if($i == count($campo) -1){
+                $sql .= $campo[$i] . ")";
+            }else{
+                $sql .= $campo[$i] . ",";
+            }
+        }
+
+    $sql .= " values (";
+    if ($file!=null && $ruta != null) {
+        $sql .= $ruta . ",";
+    }
+        for ($i=1; $i <  count($valor); $i++) { 
+            if($i == count($valor) -1){
+                $sql .= $valor[$i] . ")";
+            }else{
+                $sql .= $valor[$i] . ",";
+            }  
+        }
+        $peticion = self::$con->prepare($sql);
+        if($peticion -> execute() == true)
+        {   
+
+            if ($valor[0] == "persona") {
+                $value  = rand(0,50000000000000);
+                $value .= "----";
+                $fecha  = date(DATE_RFC2822);
+                $fecha .= "----";
+                $hash = md5($value.$fecha);
+            $sql ="insert into proyecto.resgistropendiente(correoPendiente, hash)
+                values(" . 
+                    $valor[1] . "," . $hash.")";
+                    $peticion = self::$con->prepare($sql);
+                    $peticion -> execute(); 
+
+
+
+
+
+            //Correo registro
+            require "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/vendor/autoload.php";
+
+            $mail = new PHPMailer();
+            $mail->IsSMTP();
+
+            // cambiar a 0 para no ver mensajes de error
+            $mail->SMTPDebug  = 2;                          
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = "tls";                 
+            $mail->Host       = "smtp.gmail.com";    
+            $mail->Port       = 587;                 
+            // introducir usuario de google
+            $mail->Username   = "jelose84@gmail.com"; 
+            // introducir clave
+            $mail->Password   = "SanjeSus1890";       
+            $mail->SetFrom("jelose84@gmail.com", 'Correo de prueba');
+            // asunto
+            $mail->Subject    = "Confirme su registro en AutoEscuela JLS";
+            // cuerpo
+            $mail->MsgHTML('Prueba');
+            // adjuntos
+
+            $mail->Body = "Bienvenido a AutoEscuela JLS, soy jesús López y usted ha sido registrado en nuestra aplicación,
+            le escribo para informarle que usted debe completar el registro en el siguiente 
+            <a href=\"http://projects/Proyecto%201trimestre/views/register?hash=${hash}\" target=\"_blank\">enlace</a><br> Un saludo.";
+            $mail->AltBody = "Usted no admite html en un correo pero le informo que Jesús López Segura le ha hablado.";
+            // destinatario
+            $address = $valor[1] ;
+            var_dump(PHPMailer::validateAddress('javi.cazalla@gmail.com'));
+            $mail->AddAddress($_POST);
+            // enviar
+            $resul = $mail->Send();
+            if(!$resul) {
+            echo "Error" . $mail->ErrorInfo;
+            } else {
+            echo "Enviado";
+            }
+        }
+        print_r($valor);}
+        else{
+        }
+}
+
+        //Preparar un campo <Select> con los datos de la tabla
+        //normalmente se hara con la tabla rol o tematica
+        public static function creaSelect(String $nombreTabla){
+            DB::conexion("proyecto");
+            $sql ="select * from proyecto.${nombreTabla}";
+            $peticion = self::$con->prepare($sql);
+            $peticion -> execute();
+            $select = $peticion->fetchAll(PDO::FETCH_NUM);
+            return $select;
+            
+        }
+
+
         // Para probar la conexion usar
         //  
         //   echo 'Conectado a '.self::$con->getAttribute(PDO::ATTR_CONNECTION_STATUS);
@@ -196,7 +340,7 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
                 while($fila = $resultado->fetch(PDO::FETCH_ASSOC)){
                     $objPregunta = new stdClass;
                     $objPregunta->id = $fila['id Pregunta'];
-                    $objPregunta->enunciado = $fila['enunciado'];
+                    $objPregunta->enunciado = $fila['Pregunta'];
                     $objPregunta->recurso = $fila['recurso'];
                     $objPregunta->respuesta = $fila['respuestaCorrecta'];
                     $objPregunta->idTematica = $fila['tematica'];
@@ -207,11 +351,8 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
         }
 
         //Temática
-        public static function insertaTematica(){}
 
         //Rol
-        public static function insertaRol(){}
-
         public static function miraRol(String $correo){
             $sql ="select rol from proyecto.persona where email = '${correo}'";
             $peticion = self::$con->prepare($sql);
@@ -219,6 +360,50 @@ require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelper
             $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
         return implode(",",$resultado);
 
+        }
+
+        //Preguntas y Respuestas
+        public static function sacaMaxId($nombreTabla){
+            DB::conexion("proyecto");
+            $sql = "SELECT 
+                        column_name as PRIMARYKEYCOLUMN
+                        FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC 
+                        
+                        INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE AS KU
+                            ON TC.CONSTRAINT_TYPE = 'PRIMARY KEY' 
+                            AND TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME 
+                            AND KU.table_name=\"${nombreTabla}\"
+                        where tc.table_schema = \"proyecto\" 
+                        and tc.TABLE_NAME=\"${nombreTabla}\";";
+
+            $peticion = self::$con->prepare($sql);
+            $peticion -> execute();
+            $PK = $peticion->fetch(PDO::FETCH_ASSOC);
+            $sql ="select max(`{$PK["PRIMARYKEYCOLUMN"]}`) as 'MaxID' from proyecto.${nombreTabla}";
+            $peticion = self::$con->prepare($sql);
+            $peticion->execute();
+            $resultado = $peticion->fetch(PDO::FETCH_ASSOC);
+            return $resultado['MaxID'];
+        }
+
+        //Examen
+        public static function sacaPreguntasExamen($idExamen){
+            DB::conexion("proyecto");
+            $sql ="select `id Pregunta` as 'Pregunta', recurso as 'Recurso' from proyecto.Preguntas where `id Pregunta` in (select idPreguntas from examenpreguntas where idExamen = ${idExamen} )";
+        
+            $peticion = self::$con->prepare($sql);
+            $peticion->execute();
+            $resultado= $peticion->fetchAll(PDO::FETCH_NUM);
+
+            return $resultado;
+        }
+        public static function sacaRespuestasPregunta($idPregunta){
+            DB::conexion("proyecto");
+            $sql ="select respuesta as 'Respuesta' from proyecto.respuestas where PreguntaRespuesta = ${idPregunta}";
+            $peticion = self::$con->prepare($sql);
+            $peticion->execute();
+            $resultado = $peticion->fetchAll(PDO::FETCH_NUM);
+            return $resultado;
         }
 
 }

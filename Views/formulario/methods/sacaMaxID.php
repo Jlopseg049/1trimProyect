@@ -5,4 +5,10 @@
     if (!isset($_SESSION["login"])) {
         header("location: {$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/");
     }
-    echo json_encode(DB::sacaFila($_SESSION["tabla"], $_SESSION["id"]));
+
+    if($_GET["tabla"] == null){
+        $tabla = Sesion::leer("tabla");
+    }else{
+        $tabla = $_GET["tabla"];
+    }
+    echo json_encode(DB::sacaMaxId($tabla));

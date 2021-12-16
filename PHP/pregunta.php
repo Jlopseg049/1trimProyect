@@ -10,7 +10,7 @@
         protected $recurso;
         protected $respuestaCorrecta;
         protected $tematica;
-
+        protected $respuestas;
 
         /*Metodos mágicos*/
 
@@ -24,8 +24,10 @@
         public function __construct($row) {
             $this->id = $row['id'];
             $this->enunciado = $row['enunciado'];
+            $this->respuestas =$row['respuestas'];
             $this->recurso = $row['recurso'];
-            $this->tematica = $row['tematica'] = new Tematica;
-            $this->respuestaCorrecta = $row['respuestaCorrecta'] = new Respuesta;
+            $this->tematica = $row['tematica'];
+            $this->respuestaCorrecta = $row['respuestaCorrecta'];
+
         }
     }

@@ -17,14 +17,43 @@
         }
         ?>
         <form action="" method="post">
-            <label for="Nombre">Nombre: *</label><input type="text" name="Nombre" required>
-            <label for="Apellido_1">Apellido_1: *</label><input type="text" name="Apellido_1" required>
-            <label for="Apellido_2">Apellido_2:(Opcional)</label><input type="text" name="Apellido_2" >
-            <label for="Pass">Contraseña: *</label><input type="password" name="Pass" >
-            <label for="Date">Fecha Nacimiento: *</label><input type="date" name="Date" >
-            <label for="Correo">Correo electrónico: *</label><input type="email" name="Correo" required>
-            <label for="img">Foto de perfil:(Opcional):</label><input type="file" name="img" >
-
+            <div>
+                <label for="Nombre">
+                    <input type="text" name="Nombre" required>
+                    <span>Nombre: *</span>
+                </label>
+                
+                <label for="Apellido_1">
+                    <input type="text" name="Apellido_1" required>
+                    <span>Apellido_1: *</span>
+                </label>
+                
+                <label for="Apellido_2">
+                    <input type="text" name="Apellido_2" >
+                    <span>Apellido_2:(Opcional)</span>
+                </label>
+                    
+                
+                <label for="Pass">
+                    <input type="password" name="Pass" >
+                    <span>Contraseña: *</span>
+                </label>
+                
+                <label for="Date">
+                    <input type="date" name="Date" >
+                    <span>Fecha Nacimiento: *</span>
+                </label>
+                
+                <label for="Correo">
+                    <input type="email" name="Correo" required>
+                    <span>Correo electrónico: *</span>
+                </label>
+                
+                <label for="img">
+                    <input type="file" name="img" >
+                    <span>Foto de perfil:(Opcional):</span>
+                </label>
+            </div>
             <!--         <label for="Rol">Rol</label><input type="text" name="Rol" required>
     -->
             <?php
@@ -50,7 +79,9 @@
                 }
             }
             ?>
-            <button type="submit" name="enviar">Iniciar sesion</button>
+            <div>
+                <input type="submit" name="enviar" value="Confirmar Registro">
+            </div>
         </form>
     </body>
 </html> 

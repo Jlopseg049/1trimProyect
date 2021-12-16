@@ -21,23 +21,23 @@
         public function __construct($row) {
             $this->idRespuesta = $row['idRespuesta'];
             $this->enunciadoRespuesta = $row['enunciadoRespuesta'];
-            $this->idPregunta = $row['idPregunta'] = new Pregunta;           
+            $this->idPregunta = $row['idPregunta'];           
         }
 
 
             /*Métodos*/
 
-        public static function MuestraExamenPreguntas(){
-            $respuestas = array(DB::SacaPreungtas);
-            $RespuestasPorPregunta = array();
-            foreach ($respuestas as $respuesta => $preguntaResponder){
-                $RespuestasPorPregunta  [$preguntaResponder[$this->$idPregunta->__get('idRespuesta')];
-                                        [$respuesta] = $preguntaResponder[$this->$idRespuesta];
-            }
+        // public static function MuestraExamenPreguntas(){
+        //     $respuestas = array(DB::SacaPreungtas);
+        //     $RespuestasPorPregunta = array();
+        //     foreach ($respuestas as $respuesta => $preguntaResponder){
+        //         $RespuestasPorPregunta  [$preguntaResponder[$this->$idPregunta->__get('idRespuesta')];
+        //                                 [$respuesta] = $preguntaResponder[$this->$idRespuesta];
+        //     }
             
-        }
+        // }
 
-        foreach ($respuestas as $k => &$pregunta) {
-        $preguntaRespuestas[$pregunta['idpregunta']][$k] = $pregunta['idrespuesta'];
-        }
+        // foreach ($respuestas as $k => &$pregunta) {
+        // $preguntaRespuestas[$pregunta['idpregunta']][$k] = $pregunta['idrespuesta'];
+        // }
     }

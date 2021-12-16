@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>AutoEscuela JLS</title>
         <link rel="stylesheet" href="CSS/index.css">
-        <link rel="stylesheet" href="CSS/cssNavPrueba.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" rel="stylesheet">
@@ -22,7 +21,6 @@
             <img src="IMG/moon.png" id="luna" alt="Luna">
             <img src="IMG/mountain.png" id="montanas" alt="Montanas">
             <img src="IMG/road.png" id="carretera" alt="Carreteras">
-            <section id="login">
                 <section id="login" class="login-div flex-column-centered">
                       <h1 id="header" class="text-center">AutoEscuela JLS</h1>
                       <form method="post" class="flex-column-centered">
@@ -75,18 +73,17 @@
 
                         }
                         echo "<input type=\"password\" name=\"password\" id=\"password\" placeholder=\"Contraseña\" required>";
-                        echo "<label for=\"recuerdame\">Recuerdame</label>
+                        echo "<label for=\"recuerdame\" class=\"text-center\">Recuerdame</label>
                               <input type=\"checkbox\" name=\"recuerdame\" id\"recuerdame\" value=\"recuerdame\">";
                       }
                        ?> 
-                        <input type="submit" name="login" value="Login">
+                        <input type="submit" id="inputLogin" name="login" value="Login">
 
                       </form>
                       <a href="#">
                         <p class="text-center">Forgot Password?</p>
                       </a>
-                  </div>
-            </section>
+              </section>
             </main>
     <footer class="fixed_footer">
         <div class="content">

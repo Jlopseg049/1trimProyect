@@ -1,8 +1,17 @@
 <script src="../js/Examen.js"></script>
+<section class="formu"></section>
+<form action="#" method="post">
+    <label for="descripcion">
+        <input name ="descripcion" id="descripcion"type="text"placeholder="Descripción">
+        <span>Descipción</span>
+    </label>
+    <label for="duracion">
+        <input name ="duracion" id="duracion"type="text"placeholder="Duración">
+        <span>Duracion</span>
+    </label>        
+    </form>
 
-
-<h2>Nuevo Examen</h2>
-<section>
+<section class="preguntas grid">
     <table>
         <thead>
             <tr><th colspan="2">Preguntas disponibles</th></tr>
@@ -28,5 +37,10 @@
             
         </tbody>
     </table>
+    
 </section>
+<form action="">
+<input type="submit" id="enviar" value="Crear examen">
+
+</form>
     

@@ -5,6 +5,12 @@ window.addEventListener("load", function(){
     const selectedPreguntas = tablas[1].tBodies[0];
     const preguntas = listaPreguntas.children;
 
+    const desc = this.document.getElementById("descripcion");
+    const dura = this.document.getElementById("duracion");
+    dura.setAttribute("onkeypress",  "return validaNumericos(event)");
+    const btn = this.document.getElementById("enviar");
+
+
     rellenaPreguntas();
 
     function rellenaPreguntas(){
@@ -15,7 +21,7 @@ window.addEventListener("load", function(){
             var respuesta = JSON.parse(ajax.responseText);
             if (respuesta.preguntas.length > 0) {
               for (let i = 0; i < respuesta.preguntas.length; i++) {
-                var fila = crearContenido(respuesta.preguntas[i]);
+                var fila = crearTabla(respuesta.preguntas[i]);
                 listaPreguntas.appendChild(fila);
               }
             }
@@ -26,8 +32,7 @@ window.addEventListener("load", function(){
 
 
 
-
-        function crearContenido(mensaje){
+        function crearTabla(mensaje){
 
           const fila = document.createElement("tr");
           fila.style.cursor="pointer";
@@ -56,7 +61,6 @@ window.addEventListener("load", function(){
           fila.id=mensaje.id;
           fila.addEventListener("dragstart", function(){
             event.dataTransfer.setData('id', event.target.id);
-            console.log(event.dataTransfer.getData('id'));
           });
           return fila;
       }
@@ -77,4 +81,16 @@ window.addEventListener("load", function(){
       document.getElementById(id).children[0].style.removeProperty('display');
       tablas[1].appendChild(document.getElementById(id));
   });
+
+  btn.addEventListener("click", function(ev){
+    ev.preventDefault();
+    
+  });
 });
+function validaNumericos(event) {
+  if(event.charCode >= 48 && event.charCode <= 57){
+    return true;
+   }
+   return false;        
+}
+

@@ -1,0 +1,161 @@
+ /*Colores*/
+
+ $filtro: #0a2a43, transparent; 
+
+ $GeneralFont:Arial, Helvetica, sans-serif;
+ $HeaderFont:'Jim Nightshade';
+ $textColor:#fff;
+ $labelColor:rgb(199, 183, 183);
+ $inputFormColor:#0a2a437c;
+
+ 
+
+   //Mixins                             
+@mixin gradient($direction, $list) { 
+ background: -webkit-linear-gradient($direction, $list);
+ background: -moz-linear-gradient($direction, $list);
+ background: -o-linear-gradient($direction, $list);
+ background: linear-gradient($direction, $list);  
+}
+@mixin box-shadow($x-axis: 0, $y-axis: 1px, $blur: 2px, $color: $bodyBgColor) {
+ box-shadow: $x-axis $y-axis $blur $color;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+*{
+    margin:0;
+    padding:0;
+    font-family: $GeneralFont;
+
+
+}
+
+   
+  
+body{
+    background: $bodyBgColor;
+    min-height: 1500px;
+}
+    main{
+        position: relative; 
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    &::before{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        //Ponemos un filtro por encima que más tarde mimetizaremos
+        // junto al conjunto de imagenes que tenemos como fondo
+        @include gradient(to top, $filtro);
+        z-index: 2;
+    }
+    &::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: $bodyBgColor;
+        z-index: 2;
+        /*Filtro para crear una concordancia de colores entre elementos*/
+        mix-blend-mode: color;
+    }
+         img{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            //Para que la imagen se adapte al contenedor
+            object-fit: cover;
+            //Evitar que se puedan clickar las imagenes
+            pointer-events: none;
+        }
+    }
+    #header{
+        font-size: 6em;
+        font-family: $HeaderFont, cursive;
+        font-weight: 600;
+        color:$textColor;
+        //La animación no se notara en exceso, pero lo justo para que cuando la mires un poco , la página
+        //muestre una sensación de movimiento.
+        animation: titulo 3s linear 1s infinite alternate;
+      }
+      
+      @keyframes titulo {
+          //Añadir normalmente las versiones webkit son innecesarias ya que el propio SASS 
+          //cubre estas necesidades por ti al generar el archivo CSS
+        0%     {-webkit-transform: scale(1);
+                 transform: scale(1);}
+        50%    {-webkit-transform: scale(0.99);
+                transform: scale(0.99);}
+        100%   {-webkit-transform: scale(1);
+                transform: scale(1);}
+      }
+
+      .fixed_footer{
+        width: 80%;
+        margin-left: 10%;
+        height: 350px;
+        background: $bodyBgColor;
+        position: fixed; left: 0; bottom: 0;
+        z-index: -100;
+        text-align: center;
+
+        p{
+          color: #696969;
+          column-count: 2;
+          column-gap: 50px;
+          font-size: 1em;
+          font-weight: 300;
+        }
+    }

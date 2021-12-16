@@ -1,5 +1,7 @@
 <?php
           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
         Sesion::iniciar(); 
-        DB::Conexion("proyecto");
+        if (!isset($_SESSION["login"])) {
+            header("location:..");
+        }
         echo DB::sacaLista(Sesion::leer("tabla"));

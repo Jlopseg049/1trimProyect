@@ -1,0 +1,44 @@
+.respuestas{
+    
+    display: -ms-grid;
+    display: grid;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    left: 30%;
+}
+header{
+    margin-top: 3%;
+    text-align: center;
+}
+main{
+    min-height: 80vh;
+}
+
+.enunciado{
+    font-size: 1.4em;
+    font-weight: bold;
+
+}
+.respuestas>label{
+    margin-left: 10%;
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    height: 25px;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+img{
+    margin-top: 2%;
+}
+.respuestasImagen{
+    margin-left: 10%;
+display: inline;
+}
+span{
+    margin-top: 10px;
+    color:yellow;
+}

@@ -1,0 +1,31 @@
+
+
+table{
+    
+    margin-left: 10%;
+	background-color: $blanco;
+	text-align: center;
+	border-collapse: collapse;
+	width: 80%;
+	th, td{
+        vertical-align: center;
+
+        padding: 10px;
+    }
+    th{
+        font-weight: bold;
+        justify-items: center;
+    }
+thead{
+    border-bottom: $border;
+
+}
+    thead, tfoot{
+        background-color: $PrimaryColor;
+        color: $blanco;
+    }
+    tr:nth-child(even){
+        background-color: $SecondaryColor;
+    }
+}
+

@@ -1,186 +1,283 @@
-*{
-    margin:0;
-    padding:0;
-    font-family: Arial, Helvetica, sans-serif;
-
-
+/*Colores*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
-    /*Colores*/
-:root{
-    --bodyBgColor:#0a2a43;
-    --filtroColor:  #0a2a43;
-    ;
-    --textColor:#fff;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
 }
 
-body{
-    background: var(--bodyBgColor);
-    min-height: 1500px;
+body {
+  line-height: 1;
 }
-    main{
-        position: relative;
-        
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    main::before{
-        content: '';
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(to top, var(--bodyBgColor),transparent);
-        z-index: 2;
-    }
-    main::after{
-        content: '';
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--bodyBgColor);
-        z-index: 2;
-        /*Mirar*/
-        mix-blend-mode: color;
-    }
-        main img{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /*Mirar*/
-            object-fit: cover;
-            pointer-events: none;
-        }
 
-    #header{
-        font-size: 6em;
-        font-family: 'Jim Nightshade', cursive;
-        color:var(--textColor);
+ol, ul {
+  list-style: none;
+}
 
-    }
-    #login{
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        top: 5vh;
-        z-index: 5;
-    }
+blockquote, q {
+  quotes: none;
+}
 
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+body {
+  background: #0a2a43;
+  min-height: 1500px;
+}
 
+main {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 
+main::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: -webkit-gradient(linear, left bottom, left top, from(#0a2a43), to(transparent));
+  background: linear-gradient(to top, #0a2a43, transparent);
+  z-index: 2;
+}
 
-      input{
-        transition: all 0.2s ease-out;
-        color: var(--textColor);
-      }
-      label{
-        font-weight: bold;
-        color: rgb(199, 183, 183);
-      }
-      .flex-column-centered {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
-      }
-      
+main::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a2a43;
+  z-index: 2;
+  /*Filtro para crear una concordancia de colores entre elementos*/
+  mix-blend-mode: color;
+}
 
-      
-      
-      .login-div form {
-        position: relative;
-        z-index: 5;
-      }
-      
-      .login-div form input[type="text"],
-      .login-div form input[type="password"] {
-        margin: 0.5rem auto;
-        background: #0a2a437c;
-        -webkit-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-                box-shadow: 0 8px 32px 0 #0a2a437c;
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(4px);
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        padding: 0.5em;
-        width: 500px;
-        outline: none;
-      }
-      
-      .login-div form input[type="text"]:focus,
-      .login-div form input[type="password"]:focus {
-        background-color: rgba(255, 255, 255, 0.329);
-        color: white;
-      }
-      
-      .login-div form input[type="submit"] {
-        background: rgb(85, 78, 78);
-        color: white;
-        border-radius: 5px;
-        margin: 0.5rem auto;
-        padding: 0.5rem;
-        width: 250px;
-        border: none;
-      }
-      
-      .login-div form input[type="submit"]:active {
-        
-        -webkit-transform: scale(0.95);
-                transform: scale(0.95);
-      }
-      
-      .login-div form input[type="text"]::-webkit-input-placeholder,
-      .login-div form input[type="password"]::-webkit-input-placeholder {
-        color: white;
-      }
-      
-      .login-div form input[type="text"]:-ms-input-placeholder,
-      .login-div form input[type="password"]:-ms-input-placeholder {
-        color: white;
-      }
-      
-      .login-div form input[type="text"]::-ms-input-placeholder,
-      .login-div form input[type="password"]::-ms-input-placeholder {
-        color: white;
-      }
-      
-      .login-div form input[type="text"]::placeholder,
-      .login-div form input[type="password"]::placeholder {
-        color: white;
-      }
-      
-      .login-div .text-center {
-        text-align: center;
-      }
-      .text-center{
-        color: rgb(163, 160, 160);
-      }
-      .text-center:active {
-        transform: scale(0.995);
-      }
-      .login-div a {
-        text-decoration: none;
-        color: white;
-      }
-      
+main img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  pointer-events: none;
+}
 
-      /*# sourceMappingURL=index.css.map */
+#header {
+  font-size: 6em;
+  font-family: "Jim Nightshade", cursive;
+  font-weight: 600;
+  color: #fff;
+  -webkit-animation: titulo 3s linear 1s infinite alternate;
+          animation: titulo 3s linear 1s infinite alternate;
+}
+
+@-webkit-keyframes titulo {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.99);
+    transform: scale(0.99);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes titulo {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(0.99);
+    transform: scale(0.99);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.fixed_footer {
+  width: 80%;
+  margin-left: 10%;
+  height: 350px;
+  background: #0a2a43;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: -100;
+  text-align: center;
+}
+
+.fixed_footer p {
+  color: #696969;
+  -webkit-column-count: 2;
+          column-count: 2;
+  -webkit-column-gap: 50px;
+          column-gap: 50px;
+  font-size: 1em;
+  font-weight: 300;
+}
+
+.flex-column-centered {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#login {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  top: 5vh;
+  z-index: 5;
+}
+
+.login-div {
+  min-height: 100vh;
+}
+
+.login-div form {
+  padding: 20px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.login-div form input[type="text"],
+.login-div form input[type="password"] {
+  margin: 0.5rem auto;
+  background: #0a2a437c;
+  -webkit-box-shadow: 0 8px 32px 0 #0a2a437c 1px 2px #0a2a43;
+          box-shadow: 0 8px 32px 0 #0a2a437c 1px 2px #0a2a43;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 1em;
+  width: 400px;
+  outline: none;
+  color: #fff;
+}
+
+.login-div form input[type="text"]:focus,
+.login-div form input[type="password"]:focus {
+  background-color: rgba(209, 192, 192, 0.582);
+  color: #fff;
+}
+
+.login-div form input[type="submit"] {
+  background: #554e4e;
+  color: #fff;
+  border-radius: 5px;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  width: 250px;
+  border: none;
+}
+
+.login-div form input[type="submit"]:active {
+  -webkit-transform: scale(0.95);
+          transform: scale(0.95);
+}
+
+.login-div form input[type="text"]::-webkit-input-placeholder,
+.login-div form input[type="password"]::-webkit-input-placeholder {
+  color: #fff;
+}
+
+.login-div form input[type="text"]:-ms-input-placeholder,
+.login-div form input[type="password"]:-ms-input-placeholder {
+  color: #fff;
+}
+
+.login-div form input[type="text"]::-ms-input-placeholder,
+.login-div form input[type="password"]::-ms-input-placeholder {
+  color: #fff;
+}
+
+.login-div form input[type="text"]::placeholder,
+.login-div form input[type="password"]::placeholder {
+  color: #fff;
+}
+
+.login-div .text-center {
+  text-align: center;
+  color: #c7b7b7;
+}
+
+.login-div .text-center:active {
+  -webkit-transform: scale(0.99);
+          transform: scale(0.99);
+}
+
+.login-div a {
+  text-decoration: none;
+  color: #fff;
+}
+/*# sourceMappingURL=index.css.map */

@@ -1,7 +1,6 @@
 
 <?php
-    use PHPMailer\PHPMailer\PHPMailer;
-    require "helpers/vendor/autoload.php";
+    require "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/helpers/vendor/autoload.php";
     $mail = new PHPMailer();
     $mail->IsSMTP();
 

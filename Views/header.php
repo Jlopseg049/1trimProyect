@@ -25,7 +25,7 @@ echo "<header class=\"menu\">
 					</a>
 				</li>
 				<li class=\"li\">
-					<a href=\"?p=Admin/Usuarios/nuevoUsuarioMasiva\" class=\"links\">
+					<a href=\"?p=formulario/formMasivo&t=persona\" class=\"links\">
 						Alta masiva de usuarios
 					</a>
 				</li>
@@ -87,6 +87,33 @@ echo "<header class=\"menu\">
 </nav>
 </header>";
 	}else{
-		
+		echo "
+<header class=\"menu\">
+	<nav class=\"nav\">
+		<ul class=\"ul\">
+			<li class=\"li\">
+				<a href=\"?p=Listados/lista&t=examenHecho\" class=\"links\">
+						<span class=\"span fourth\">
+						<i class=\"icon fa fa-file\" aria-hidden=\"true\"></i>
+						</span>Historico exámenes
+				</a>
+			</li>
+			<li class=\"li\">
+				<a href=\"?p=Listados/lista&t=examen\" class=\"links\">
+						<span class=\"span second\">
+						<i class=\"icon fa fa-file\" aria-hidden=\"true\"></i>
+						</span>Examen predefinido
+				</a>
+			</li>
+			<li class=\"li\">
+				<a href=\"?p=Listados/lista&t=examen\" class=\"links\">
+						<span class=\"span third\">
+						<i class=\"icon fa fa-file\" aria-hidden=\"true\"></i>
+						</span>Examenes
+				</a>
+			</li>
+		</ul>
+	</nav>
+</header>";
 	}
 ?>

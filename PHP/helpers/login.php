@@ -8,7 +8,12 @@
             if(self::Existeusuario($usuario,$contrasena))
             {
                 Sesion::iniciar();
-                Sesion::escribir('login',$usuario); 
+                if(Sesion::existe('login')){
+                    Sesion::eliminar('login');
+                    Sesion::escribir('login',$usuario); 
+                }else{
+                    Sesion::escribir('login',$usuario); 
+                }
                 if($recuerdame)
                 {
                     setcookie('recuerdame',$usuario,time()+30*24*60*60);

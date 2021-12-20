@@ -1,5 +1,6 @@
+
 .respuestas{
-    
+    width: 70%;
     display: -ms-grid;
     display: grid;
     margin-top: 15px;
@@ -8,12 +9,9 @@
     left: 30%;
 }
 header{
-    margin-top: 3%;
     text-align: center;
 }
-main{
-    min-height: 80vh;
-}
+
 
 .enunciado{
     font-size: 1.4em;
@@ -41,4 +39,8 @@ display: inline;
 span{
     margin-top: 10px;
     color:yellow;
+}
+label{
+    padding-bottom: 5%;
+
 }

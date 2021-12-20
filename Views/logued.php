@@ -9,9 +9,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <?php
     if(isset($_GET["p"])){
-        if(isset($_GET["p"]) == "maquetaExamen/Examen"){
+        if(strtolower($_GET["p"]) == "examen/examenprueba"){
             echo
-            "<link rel=\"stylesheet\" href=\"../CSS/maquetaExamen.css\">"
+            "        <link rel=\"stylesheet\" href=\"../CSS/examenPrueba.css\">
+            "
             ;
         }
     }
@@ -35,7 +36,9 @@
     isset($_GET["id"])?Sesion::escribir("id",$_GET["id"]):"";
 
 //cabecera
-    require_once "header.php";
+
+if(isset($_GET["p"]) && strtolower($_GET["p"]) == "examen/examenprueba"){
+}else{ require_once "header.php";}
     ?>
     <main class="content">
     <?php

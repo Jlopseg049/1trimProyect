@@ -70,23 +70,23 @@ main.appendChild(boton);
         .map(linea => linea.split(separador));
     }
     boton.addEventListener("click",()=>{
-        formulario = new FormData();
-        formulario.append("tabla", tabla);
+
         tamano = document.getElementsByTagName("textarea")[0].value.split(",").length;
         datos = document.getElementsByTagName("textarea")[0].value.split(",");
         
         for (let i = 0; i < tamano; i++) {
-            
-            formulario.append(`dato_${i}`,datos[i]);            
+            formulario = new FormData();
+            formulario.append("tabla", tabla);
+            if (tabla == "persona") {
+                formulario.append("email","'" + datos[i] + "'");   
+
+            }
+            const ajax = new XMLHttpRequest;  
+
+            ajax.open("POST", "formulario/methods/meteDatos.php");
+            ajax.send(formulario);         
         }
-        const ajax = new XMLHttpRequest;  
-        ajax.onreadystatechange = function () {
-          if (ajax.readyState == 4 && ajax.status == 200) {
-            return datosTabla = JSON.parse(ajax.responseText);
-          }
-        }
-          ajax.open("POST", "formulario/methods/meteDatosMasivos.php");
-          ajax.send(formulario);
+
         })
 });
 

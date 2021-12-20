@@ -72,12 +72,19 @@ function getParameterByName(name) {
               div2.appendChild(p);
                             //Solo habra 4 posibles respuestas
               for (let x = 0; x < 4; x++) {
+                if(respuesta.estado == "edit"){
                 div2.appendChild(creaRespuestas(datosTabla[1][x], 
                                                 respuesta.estado, 
                                                 x, 
                                                 datosTabla[0])
                                                 );
-
+                }else{
+                  div2.appendChild(creaRespuestas(null, 
+                                                  respuesta.estado, 
+                                                  x, 
+                                                  numeroPreguntas +1)
+                    );
+                }
               }
   
             }
@@ -96,6 +103,7 @@ function getParameterByName(name) {
           let excepciones = [];
           if(tabla == "persona")  {excepciones = ['contrasena','activo']}
           if(tabla == "preguntas"){excepciones = ['PreguntaRespuesta','respuesta','respuestaCorrecta']}
+          if(tabla == "examen")   {excepciones = ['nPreguntas']}
           if(excepciones.includes(input[0])==false){
           if (/^PRI/.test(input[3]) == false){
 
@@ -142,12 +150,12 @@ function getParameterByName(name) {
               label.appendChild(inputFormu);
             }
 
-            
-            if(/^tinyint/.test(input[1])){
-              inputFormu.setAttribute("type", "checkbox");
-              label.appendChild(inputFormu);
+      //Para esta tabla los campos booleanos los controlamos de manera externa            
+            // if(/^tinyint/.test(input[1])){
+            //   inputFormu.setAttribute("type", "checkbox");
+            //   label.appendChild(inputFormu);
 
-            }
+            // }
 
             if(/^foto/.test(input[0]) || /^recurso/.test(input[0])){
               inputFormu.setAttribute("type", "file");
@@ -218,11 +226,11 @@ function getParameterByName(name) {
                 label.appendChild(inputFormu);
               }else
 
-
-              if(/^tinyint/.test(input[1])){
-                inputFormu.setAttribute("type", "checkbox");
-                label.appendChild(inputFormu);
-              }
+      //Para esta tabla los campos booleanos los controlamos de manera externa            
+              // if(/^tinyint/.test(input[1])){
+              //   inputFormu.setAttribute("type", "checkbox");
+              //   label.appendChild(inputFormu);
+              // }
               label.setAttribute("for",inputFormu.getAttribute("name"));
 
                           label.appendChild(span);
@@ -350,6 +358,7 @@ function getParameterByName(name) {
 
     submit.addEventListener("click",async function(ev) {
       ev.preventDefault();
+      debugger
       formulario = new FormData();
       formulario.append("tabla", respuesta.tabla);
        camposFormData = formu[0].children[0].children.length;
@@ -365,14 +374,11 @@ function getParameterByName(name) {
          if(formu[0].children[0].children[i].children[0].getAttribute("tipo") == "select"){
             dato2 = parseInt(formu[0].children[0].children[i].children[0].value);
           }
+          
           if(formu[0].children[0].children[i].children[0].getAttribute("tipo") == "fichero"){
+            
 
               dato2 = formu[0].children[0].children[i].children[0].files[0];
-
-
-    
-
-
           }
 
         formulario.append(dato1, dato2);
@@ -395,8 +401,13 @@ function getParameterByName(name) {
           }
        }
 
-       if(respuesta.estado == "edit"){
+       if(estado == "edit"){
+        id = getParameterByName("id")
+        formulario.append("id",id);
+
          ajaxModifica(formulario);
+         document.location.href = '/Proyecto%201trimestre/views/logued.php?p=Listados/lista&t=' + respuesta.tabla;
+
        }
        if(respuesta.estado == "anadir"){
          
@@ -427,6 +438,7 @@ function getParameterByName(name) {
 
         ajax.open("POST", "formulario/methods/cambiaDatos.php");
         ajax.send(formulario);
+        
     }
     function ajaxInsert(formulario){ 
       const ajax = new XMLHttpRequest;  

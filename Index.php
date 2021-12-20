@@ -9,7 +9,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap" rel="stylesheet">
-        <script src="JS/ParalaxLayout.js"></script>
+        <script src="JS/index.js"></script>
         <?php
           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadClases.php";
           require_once "{$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/PHP/autoloadHelpers.php";
@@ -80,7 +80,7 @@
                         <input type="submit" id="inputLogin" name="login" value="Login">
 
                       </form>
-                      <a href="#">
+                      <a id="restPasswd"href="php/resetPassword.php#">
                         <p class="text-center">Forgot Password?</p>
                       </a>
               </section>

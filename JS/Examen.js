@@ -74,19 +74,41 @@ window.addEventListener("load", function(){
     tablas[0].addEventListener("drop", function(){
       const id = event.dataTransfer.getData('id');
       document.getElementById(id).children[0].style.display="none";
-      tablas[0].appendChild(document.getElementById(id));
+      listaPreguntas.appendChild(document.getElementById(id));
   });
     tablas[1].addEventListener("drop", function(){
+      
       const id = event.dataTransfer.getData('id');
       document.getElementById(id).children[0].style.removeProperty('display');
-      tablas[1].appendChild(document.getElementById(id));
+      selectedPreguntas.appendChild(document.getElementById(id));
   });
 
   btn.addEventListener("click", function(ev){
     ev.preventDefault();
-    
+
+    formulario = new FormData();
+    formulario.append("tabla", "examen");
+    formulario.append("descripcion", desc.value);
+    formulario.append("duracion", dura.value);
+    formularioPreguntas = [];
+    for (let index = 0; index < selectedPreguntas.childElementCount; index++) {
+      formularioPreguntas[index] = selectedPreguntas.children[index].children[0].innerText;
+  
+    }
+    formulario.append("preguntas", formularioPreguntas);
+    ajaxInsert(formulario);
+    debugger
+    document.location.href = '/Proyecto%201trimestre/views/logued.php?p=Listados/lista&t=examen';
+
   });
+
 });
+function ajaxInsert(formulario){ 
+  const ajax = new XMLHttpRequest;  
+
+    ajax.open("POST", "admin/examen/methods/meteExamen.php");
+    ajax.send(formulario);
+}
 function validaNumericos(event) {
   if(event.charCode >= 48 && event.charCode <= 57){
     return true;

@@ -84,6 +84,28 @@ class Validacion
         }
     }
 
+    public static function EmailExiste($campo){
+        
+        if(Validacion::Email($campo)  &&  DB::existeEmail($campo)){
+            return true;
+        }else{
+            self::$errores[$campo]="Su correo es inválido o no se encuentra en nuestras base de datos. <br>
+                                    Si no está registrado, <br>
+                                    contacte con alguno de nuestros profesores para darle de alta.<br>
+                                    En caso contrario, vuelva a intentarlo.";
+            return false; 
+        }
+    }
+    public static function Contrasena($password){
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number    = preg_match('@[0-9]@', $password);
+        if(!$uppercase || !$lowercase || !$number || strlen($password) < 5) {
+            return false;
+        }else{
+            return true;
+        }
+    }
     public static function Dni($campo)
     {
         $letras="TRWAGMYFPDXBNJZSQVHLCKE";

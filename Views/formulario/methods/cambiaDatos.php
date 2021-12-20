@@ -3,16 +3,16 @@
 
     Sesion::iniciar();
     if (!isset($_SESSION["login"])) {
-        header("location: ../../");
+        header("location: {$_SERVER["DOCUMENT_ROOT"]}/proyecto 1trimestre/");
     }
-
+var_dump($_FILES);
 if (isset($_FILES["recurso"])) {
 
     $errores = [];
     $permitidos = array("image/png", "image/jpeg", "image/jpg", "image/gif", "video/mp4", "video/mpg", "video/mpeg", "video/avi");
     $limitekb = 4096;
     if (in_array($_FILES["recurso"]["type"], $permitidos) && $_FILES["recurso"]["size"] <= $limitekb * 1024) {
-        $ruta = "../../Recursos/Preguntas/" . $_FILES["recurso"]["name"];
+        $ruta = "../../../Recursos/Preguntas/" . $_FILES["recurso"]["name"];
         move_uploaded_file($_FILES["recurso"]["tmp_name"], $ruta);
         $ruta ="'" ."../../Recursos/Preguntas/" . $_FILES["recurso"]["name"] . "'";
     } else if (!in_array($_FILES["recurso"]["type"], $permitidos)) {
@@ -22,7 +22,6 @@ if (isset($_FILES["recurso"])) {
     }
     if (count($errores)==0) {
 
-        DB::insertGenerico("recurso", $ruta);
+        DB::updateGenerico("recurso", $ruta);
     }
-}else{DB::insertGenerico();}
-
+}else{DB::updateGenerico();}

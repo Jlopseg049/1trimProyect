@@ -63,10 +63,10 @@ window.addEventListener("load", function(){
           Array.prototype.forEach.call( document.getElementsByTagName("tr")[nFila].children, 
               (celdaActual) => {
                 if(nFila > 0){
-                  celdaActual.innerText.toLowerCase().
-                  includes(ev.target.value.toLowerCase());
-                  if ( celdaActual.innerText.toLowerCase().
-                      includes(ev.target.value.toLowerCase()) &&
+;
+                  //Ahora mi filtro no tiene en cuenta los acentos
+                  if (quitarAcentos(celdaActual.innerText.toLowerCase()).
+                  includes(ev.target.value.toLowerCase()) &&
                       oculto === "espera") {
                       oculto = "no";
                       
@@ -82,6 +82,14 @@ window.addEventListener("load", function(){
           })
         });
       return form;
+    }
+
+
+    function quitarAcentos(cadena){
+      
+      const acentos = {'á':'a','é':'e','í':'i','ó':'o','ú':'u','Á':'A','É':'E','Í':'I','Ó':'O','Ú':'U'};
+     
+      return cadena.split('').map( letra => acentos[letra] || letra).join('').toString();	
     }
 
     function creaLista(datos, tipo = "lista", tabla = "") {
@@ -130,19 +138,42 @@ window.addEventListener("load", function(){
        if (tabla != "tematica") {
         enlaces["enlace 2"] = document.createElement("a");
         enlaces["enlace 2"].innerText="Desactivar";
+
+        enlaces["enlace 2"].addEventListener("click", function(){
+          idfila = fila.getAttribute("id").split("_");
+            const ajax = new XMLHttpRequest;  
+              window.location.reload();
+        
+              ajax.open("GET", "listados/methods/desactivaDatos.php?id="+idfila[1]);
+              ajax.send();
+          }
+        );
        }
      
         enlaces["enlace 3"] = document.createElement("a");
         enlaces["enlace 3"].innerText="Borrar";
 
-        enlaces["enlace 3"].addEventListener("click", function(){
-          idfila = fila.getAttribute("id").split("_");
+        if(tabla == "examen"){
+          enlaces["enlace 3"].addEventListener("click",  function(){
+            idfila = fila.getAttribute("id").split("_");
             const ajax = new XMLHttpRequest;  
-      
-              ajax.open("GET", "formulario/methods/quitaDatos.php?id="+idfila[1]);
+              window.location.reload();
+
+                ajax.open("GET", "listados/methods/quitaExamen.php?id="+idfila[1]);
+                ajax.send();
+            }
+          );
+        }else{
+        enlaces["enlace 3"].addEventListener("click",  function(){
+          idfila = fila.getAttribute("id").split("_");
+          const ajax = new XMLHttpRequest;  
+            window.location.reload();
+
+              ajax.open("GET", "listados/methods/quitaDatos.php?id="+idfila[1]);
               ajax.send();
           }
         );
+        }
                           celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 1"]);
 if (tabla != "tematica") {celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 2"]);}
                           celdas[" celda" + datos.length + 1].appendChild(enlaces["enlace 3"]);

@@ -3,18 +3,23 @@ window.addEventListener("load", function(){
     const tablas = this.document.getElementsByTagName("table");
     const cabecera = tablas[0].tHead;
     const lista = tablas[0].tBodies[0];
-
+    
     sacaLista();
 
-    function sacaLista(){
+    async function sacaLista(){
             
     const ajax = new XMLHttpRequest;
+    url= "listados/methods/miraLogin.php";
+    let response = await fetch(url);
 
+    if (response.ok) { 
+      let correo = await response.text();
         ajax.onreadystatechange = function () {
           if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(ajax.responseText);
-            if (respuesta.resultado.length > 0) {
+            if (respuesta.cabecera.length > 0) {
                 var filaCabecera = creaLista(respuesta.cabecera, "cabecera", respuesta.tabla);
+                
               cabecera.appendChild(filaCabecera);
               for (let i = 0; i <respuesta.resultado.length; i++) {
                 var fila = creaLista(respuesta.resultado[i], "lista", respuesta.tabla);
@@ -23,15 +28,21 @@ window.addEventListener("load", function(){
               }
             }
           }}
-          ajax.open("POST", "listados/methods/sacaLista.php");
+          ajax.open("GET", "listados/methods/sacaLista.php?correo=" + correo);
           ajax.send();
         }
-    });
+    
+    else {
+      alert("Error-HTTP: " + response.status);
+    }
+  }
+});
 
+    
     //Metodos para pintar
     
     function creaLista(datos, tipo = "lista", tabla = "") {
-      debugger
+      
       const fila = document.createElement("tr");
       if(tipo == "lista"){fila.setAttribute("id", tabla + "_" + datos[0]);}
       const celdas = [];
@@ -75,15 +86,16 @@ window.addEventListener("load", function(){
 
         */
        if (tabla == "examenHecho") {
-        enlaces["enlace 2"] = document.createElement("a");
-        enlaces["enlace 2"].innerText="Revisar";
+        enlaces["enlace 1"] = document.createElement("a");
+        enlaces["enlace 1"].innerText="Revisar";
+        enlaces["enlace 1"].setAttribute('href','?p=formulario/form&e=edit&id='+datos[0]);
        }
        if (tabla == "examen") {
         enlaces["enlace 2"] = document.createElement("a");
         enlaces["enlace 2"].innerText="Hacer";
-        enlaces["enlace 2"].addEventListener("click", function(){
-          
-        });
+        enlaces["enlace 2"].setAttribute('href','?p=examenPrueba?id='+datos[0]);
+
+
        }
 
 

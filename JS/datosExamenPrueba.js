@@ -1,6 +1,44 @@
+var Examen =  sacaExamen(getParameterByName("id"));
+sacaExamen(getParameterByName("id")).then((datosTabla)=>  Examen = datosTabla);
+
+     async function sacaExamen(id){
+        return new Promise((resolve, reject) => {
+            const ajax = new XMLHttpRequest;  
+            ajax.onreadystatechange = function () {
+              if (ajax.readyState == 4 && ajax.status == 200) {
+            datosTabla = JSON.parse(ajax.responseText);
+            resolve(datosTabla);
+              }
+            }
+              ajax.open("POST", "listados/methods/sacaExamen.php?id=" + id);
+              ajax.send();
+        });
+
+      };
+
+      function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      async function corrigeExamenf(id){
+        return new Promise((resolve, reject) => {
+            const ajax = new XMLHttpRequest;  
+            ajax.onreadystatechange = function () {
+              if (ajax.readyState == 4 && ajax.status == 200) {
+            datosTabla = JSON.parse(ajax.responseText);
+            resolve(datosTabla);
+              }
+            }
+              ajax.open("POST", "examen/methods/corrigeExamen.php?id=" + id);
+              ajax.send();
+        });
+    }
 
 //Construimos un ejemplo de la estructura de un examen
-const Examen ={
+const Examen2 ={
     //Duración de examen en minutos
     id : 1,
     duracion : 30,
@@ -51,10 +89,15 @@ const Examen ={
 };
 const RespuestasCorrectas = ["a", "a", "b", "c"];   
 //Variables
-minutos = Examen.duracion;
-segundos = 0;
+
+
+
 //carga
 window.addEventListener("load", function () {
+    minutos = parseInt(Examen.duracion);
+segundos = 0;
+    
+
     const main = document.getElementsByTagName("main")[0];
     const resultadoExamen = document.createElement("div");
 
@@ -62,7 +105,6 @@ window.addEventListener("load", function () {
     boton.setAttribute("id", "finalizar");
     boton.innerHTML="Finalizar";
     boton.addEventListener("click", corrigeExamen);
-    guardaExamenJson = []       
 
     muestraExamen();
     cargaSegundo();
@@ -90,8 +132,8 @@ window.addEventListener("load", function () {
             for(letraRespuestas in PreguntaActual.respuestas){
                 respuestas.push(
                     `<label>
-                        ${letraRespuestas} ${PreguntaActual.respuestas[letraRespuestas]}
-                        <input type = "radio" name = "Pregunta ${nPregunta}" value = "${letraRespuestas}"/> 
+                        <span>${PreguntaActual.respuestas[letraRespuestas]} </span> 
+                        <input type = "radio" value="${PreguntaActual.idrespuestas[letraRespuestas]}" name = "Pregunta ${nPregunta}" /> 
                     </label>` 
                 );
             }
@@ -129,7 +171,7 @@ window.addEventListener("load", function () {
 
         //Mostrar segundos en pantalla
         if (segundos < 10) {
-            txtSegundos = 0 + segundos;
+            txtSegundos = 0 + segundos + "";
         }else{
             txtSegundos = segundos;
         }
@@ -158,7 +200,7 @@ window.addEventListener("load", function () {
 
         }
         if (minutos < 10) {
-            txtMinutos = 0 + minutos;
+            txtMinutos = 0 + minutos + "";
         }else{
             txtMinutos = minutos;
         }
@@ -168,11 +210,15 @@ window.addEventListener("load", function () {
     const interSegundos = setInterval(cargaSegundo, 1000);
 
     //Corrección
-    function corrigeExamen(){
+function corrigeExamen(){
+
+        clearInterval(interSegundos);
+
         //Tomaremos las respuestas para recorrerlas una por una y comparar si es correcto o no,
         //si la respuesta está sin responder, contara como incorrecta.
         const respuestas = main.getElementsByClassName("respuestas");
         let aciertos = 0;
+        respuestasElegidas = []
         Examen.preguntas.forEach((PreguntaActual, nPregunta)=>{
             //Tomamos los inputs
             const todasLasRespuestas = respuestas[nPregunta];
@@ -180,48 +226,25 @@ window.addEventListener("load", function () {
             //Quiero comprobar todas aquellas respuestas que tienen el atributo checked pero no 
             //encuentro otra manera de hacerlo que no sea a través del QuerySelector ya que 
             //getElementsByTagName.getAttribute no funciona cuando seleccionas un grupo
-            const respuestaElegida = (todasLasRespuestas.querySelector(`input[name = "Pregunta ${nPregunta}"]:checked`) || {}).value;
+            var respuestaElegida = (todasLasRespuestas.querySelector(`input[name = "Pregunta ${nPregunta}"]:checked`) || {}).value;
                     //Ponemos {} para elegir tambien las preguntas vacias
-                
-            if(respuestaElegida === RespuestasCorrectas[nPregunta]){
-                aciertos ++;
-                respuestas[nPregunta].style.setProperty("color","lightgreen"); 
-                guardaExamenJson.push(respuestaElegida);
-            }else{
-                guardaExamenJson.push(respuestaElegida);
-                respuestas[nPregunta].style.setProperty("color","red"); 
+                respuestasElegidas.push(respuestaElegida);
+            });
+            enviaExamen(respuestasElegidas);
+            document.location.href = '/Proyecto%201trimestre/views/logued.php?p=Listados/lista&t=examenHecho';
 
-                correcion = document.createElement("span");
-                correcion.innerHTML = `La respuesta correcta era la ${RespuestasCorrectas[nPregunta]}.`
-                correcion.style.setProperty("color","yellow"); 
-                correcion.style.setProperty("font-weight","bolder"); 
-                correcion.style.setProperty("margin-top","10px"); 
-                correcion.style.setProperty("margin-bottom","20px"); 
-
-                respuestas[nPregunta].appendChild(correcion);
-               
-            }
-        });
-        main.removeChild(boton);
-        main.appendChild(resultadoExamen);
-        resultadoExamen.innerHTML = `Has acertado ${aciertos}/${Examen.preguntas.length}`;
-        guardaExamenJson = JSON.stringify(guardaExamenJson);
-        enviaExamen(guardaExamenJson);
     }
 
-});
 
-function enviaExamen(examen){
+function enviaExamen(mensajes){
     formulario = new FormData();
-    formulario.append("id", Examen.id);
-    formulario.append("examenHecho",examen)
+    formulario.append("idExamen", Examen.id);
+    formulario.append("calificacion", mensajes);
+    formulario.append("ejecucion", document.getElementsByTagName("html")[0].outerHTML);
     const ajax = new XMLHttpRequest;  
-    ajax.onreadystatechange = function () {
-      if (ajax.readyState == 4 && ajax.status == 200) {
-        return datosTabla = JSON.parse(ajax.responseText);
-      }
-    }
-      ajax.open("POST", "formulario/methods/enviaExamen.php");
+
+      ajax.open("POST", "examen/methods/enviaExamen.php");
       ajax.send(formulario);
   };
   
+});

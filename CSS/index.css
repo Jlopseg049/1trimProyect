@@ -209,6 +209,8 @@ main img {
   z-index: 2;
 }
 
+.login-div form input[type="file"],
+.login-div form input[type="date"],
 .login-div form input[type="text"],
 .login-div form input[type="password"] {
   margin: 0.5rem auto;
@@ -280,4 +282,35 @@ main img {
   text-decoration: none;
   color: #fff;
 }
+#resetPassOrder{
+  color:white;
+  font-family: "Jim Nightshade";
+  font-size:2em;
+  margin: 5%;
+animation: slide;
+}
+#resetPassOrder.text-center:active{
+transform: none;
+}
+
+#resetPassOrder {
+  animation: slide-out 0.5s forwards;
+  -webkit-animation: slide-out 1s forwards;
+}
+  
+
+@keyframes slide-out {
+  0% { transform: translateX(-200%); }
+  100% { transform: translateX(0%); }
+}
+
+@-webkit-keyframes slide-out {
+  0% { -webkit-transform: translateX(-100%); }
+  100% { -webkit-transform: translateX(0%); }
+}
+
+.disappear{
+
+
+display: none;}
 /*# sourceMappingURL=index.css.map */

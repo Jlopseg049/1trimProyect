@@ -4,4 +4,8 @@
         if (!isset($_SESSION["login"])) {
             header("location:..");
         }
-        echo DB::sacaLista(Sesion::leer("tabla"));
+        if (isset($_GET["correo"])) {
+          echo DB::sacaLista(Sesion::leer("tabla"),$_GET["correo"]);        
+        }else{
+          echo DB::sacaLista(Sesion::leer("tabla"));
+        }

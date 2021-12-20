@@ -3,8 +3,7 @@ window.addEventListener("load", function(){
     let luna = document.getElementById("luna");
     let montanas = document.getElementById("montanas");
     let carretera = document.getElementById("carretera");
-    let header = document.getElementById("header");
-    
+    let restPasswd = document.getElementById("restPasswd");    
     window.addEventListener("scroll", function(){
         var scrollY = window.scrollY
         noche.style.top = scrollY * 0.5 + "px";
@@ -13,4 +12,6 @@ window.addEventListener("load", function(){
         carretera.style.top = scrollY * 0.15 + "px";
     });
     
+
+
 });
